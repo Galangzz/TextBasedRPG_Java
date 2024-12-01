@@ -1,0 +1,13 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+
+    "editor.fontSize": 18,
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Beautiful Dracula Darker",
+    "workbench.iconTheme": "vscode-icons",       
+    
+}
