@@ -1,3 +1,4 @@
+package com.main;
 class Character{
     private String name;
     private int health;

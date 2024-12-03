@@ -1,3 +1,4 @@
+package com.main;
 class Player extends Character{
     private int healAmount;
     Weapon weapon;

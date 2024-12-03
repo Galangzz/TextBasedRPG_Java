@@ -1,3 +1,4 @@
+package com.main;
 class Monster extends Character{
     public Monster(String name){
         super(name, 90, 20);

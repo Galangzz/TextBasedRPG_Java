@@ -1,3 +1,4 @@
+package com.main;
 import java.util.Scanner;
 
 class Game{
