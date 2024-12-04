@@ -2,12 +2,13 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "d:\\VSC\\Visual Studio Cde\\Java\\mysql-connector-j-9.1.0\\mysql-connector-j-9.1.0\\mysql-connector-j-9.1.0.jar"
     ],
 
-    "editor.fontSize": 18,
+    "editor.fontSize": 14,
     "window.zoomLevel": 0,
-    "workbench.colorTheme": "Beautiful Dracula Darker",
+    "workbench.colorTheme": "Beautiful Dracula Normal",
     "workbench.iconTheme": "vscode-icons",       
     
 }

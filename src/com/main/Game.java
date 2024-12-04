@@ -1,7 +1,7 @@
 package com.main;
 import java.util.Scanner;
 
-class Game{
+public class Game{
     private Player player;
     private Monster monster;
     private Armor armor;
