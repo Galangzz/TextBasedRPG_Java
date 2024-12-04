@@ -15,41 +15,41 @@ public class Game{
     public void showMenu() {
         while (true) {
             System.out.println("\n=== MENU ===");
-            System.out.println("1. Buat Character");
+            System.out.println("1. Created Character");
             System.out.println("2. Start Game");
             System.out.println("3. Exit");
-            System.out.print("Pilih opsi: ");
+            System.out.print(">> ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Clear newline
+            scanner.nextLine(); 
 
             switch (choice) {
                 case 1 -> createCharacter();
                 case 2 -> {
                     if (player == null) {
-                        System.out.println("Harap buat karakter terlebih dahulu!");
+                        System.out.println("Please create a character first!");
                     } else {
                         start();
                     }
                 }
                 case 3 -> {
-                    System.out.println("Terima kasih telah bermain!");
+                    System.out.println("Thank you for playing!");
                     return;
                 }
-                default -> System.out.println("Pilihan tidak valid. Coba lagi.");
+                default -> System.out.println("Invalid choice. Try again.");
             }
         }
     }
 
     public void createCharacter() {
-        System.out.println("\n=== BUAT CHARACTER ===");
-        System.out.print("Masukkan Nama: ");
-        String name = scanner.nextLine();
-        player = new Player(name);
+        System.out.println("\n=== CREATED CHARACTER ===");
+        System.out.print("Enter Username: ");
+        String username = scanner.nextLine();
+        player = new Player(username);
 
         choseWeapon();
         choseArmor();
 
-        System.out.println("\nCharacter berhasil dibuat:");
+        System.out.println("\nCharacter successfully created:");
         player.display();
     }
 
