@@ -6,20 +6,56 @@ public class Game{
     private Monster monster;
     private Armor armor;
     private Weapon weapon;
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public Game(){
         scanner = new Scanner(System.in);
     }  
 
-    public void start(){
-        System.out.println("\n==== Welcome to Text-based RPG! ====\n");
-        System.out.print("Enter username: ");
+    public void showMenu() {
+        while (true) {
+            System.out.println("\n=== MENU ===");
+            System.out.println("1. Created Character");
+            System.out.println("2. Start Game");
+            System.out.println("3. Exit");
+            System.out.print(">> ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (choice) {
+                case 1 -> createCharacter();
+                case 2 -> {
+                    if (player == null) {
+                        System.out.println("Please create a character first!");
+                    } else {
+                        start();
+                    }
+                }
+                case 3 -> {
+                    System.out.println("Thank you for playing!");
+                    return;
+                }
+                default -> System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    public void createCharacter() {
+        System.out.println("\n=== CREATED CHARACTER ===");
+        System.out.print("Enter Username: ");
         String username = scanner.nextLine();
         player = new Player(username);
+
         choseWeapon();
         choseArmor();
+
+        System.out.println("\nCharacter successfully created:");
         player.display();
+    }
+
+    public void start(){
+        System.out.println("\n==== Welcome to Text-based RPG! ====\n");
+        System.out.println("Player: " + player.getName());
         System.out.println("\n*** Monster appear! ***");
         System.out.println("Goblin !!!");
         System.out.println("Defeat the monster!\n");
@@ -41,19 +77,16 @@ public class Game{
             int choice = scanner.nextInt();
             System.out.println("");
             switch(choice){
-                case 1:
-                    player.attack(monster);
-                    break;
-                case 2:
-                    player.heal();
-                    break;
-                case 3:
+                case 1 -> player.attack(monster);
+                case 2 -> player.heal();
+                case 3 -> {
                     System.out.println("You run from the monster!");
                     System.out.println("The monster is chasing you!!\n");
-                    break;
-                default:
+                }
+                default -> {
                     System.out.println("Invalid choice!");
                     continue;
+                }
             }
             if(monster.isAlive()){
                 monster.attack(player);
@@ -62,8 +95,10 @@ public class Game{
 
         if(player.isAlive()){
             System.out.println("\nYou win!\n");
+            player.display();
         }else{
             System.out.println("\nYou lose!\n");
+            player.display();
         }
     }
 
@@ -78,21 +113,22 @@ public class Game{
         System.out.print(">> ");
         int choiceWeapon = scanner.nextInt();
         switch(choiceWeapon){
-            case 1:
+            case 1 -> {
                 weapon = weapon1;
                 player.equipWeapon(weapon);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 weapon = weapon2;
                 player.equipWeapon(weapon);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 weapon = weapon3;
                 player.equipWeapon(weapon);
-                break;
-            default:
+            }
+            default -> {
                 System.out.println("Invalid choice");
                 choseWeapon();
+            }
         }
     }
 
@@ -105,17 +141,18 @@ public class Game{
         System.out.print(">> ");
         int choiceArmor = scanner.nextInt();
         switch(choiceArmor){
-            case 1:
+            case 1 -> {
                 armor = armor1;
                 player.equipArmor(armor);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 armor = armor2;
                 player.equipArmor(armor);
-                break;
-            default:
-            System.out.println("Invalid choice");
-            choseArmor();
+            }
+            default -> {
+                System.out.println("Invalid choice");
+                choseArmor();
+            }
         }
     }
 }
