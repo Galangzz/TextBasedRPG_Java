@@ -1,134 +1,88 @@
 package com.auth.config;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DB {
-    public static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/gamerpg";
-    private static final String USER = "root";  
-    private static final String PASSWORD = ""; 
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
-    public static Connection conn;
-    public static Statement statement;
-    private static ResultSet resultData;
-
-    //connect ke mysql
-    public static void connect(){
+    static {
         try {
-            Class.forName(JDBC_DRIVER);
-
-            conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-            if(conn != null){
-                // System.out.println("Koneksi Berhasil");
-            }
-
-            
+            Class.forName(JDBC_DRIVER); 
         } catch (ClassNotFoundException e) {
             System.out.println("Driver MySQL tidak ditemukan!");
             e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("ERROR");
-            e.printStackTrace();
         }
     }
 
-    //disconnect ke mysql
-    public static void disconnect(){
-        try {
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-                // System.out.println("Koneksi database telah ditutup.");
-            }else{
-                // System.out.println("Koneksi database sudah tidak aktif.");
+    // Membuat koneksi ke database
+    private static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, USER, PASSWORD);
+    }
+
+    // Mencari akun berdasarkan email
+    public static int cariData(String eml, String pwd) {
+        String query = "SELECT ID FROM akun WHERE email = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, eml);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("ID");
+                }
             }
         } catch (SQLException e) {
-            // System.out.println("Gagal menutup koneksi database!");
             e.printStackTrace();
         }
+        return 0; 
     }
 
+    // Login akun
+    public static String authAkun(int id, String eml, String password) {
+        String query = "SELECT EMAIL, PASSWORD FROM akun WHERE ID = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-    //cari akun by email
-    public static int cariData( String eml, String pwd )
-    {
-        DB.connect();
-        int id = 0;  
-        
-        try {
-        statement = conn.createStatement();
-        String query = "SELECT * FROM akun WHERE email = '" + eml + "'";
-        resultData = statement.executeQuery(query);
+            stmt.setInt(1, id);
 
-        int count = 0;
-        while( resultData.next() ){
-        id = resultData.getInt("ID");
-        count++;
-        }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String dbEmail = rs.getString("EMAIL");
+                    String dbPassword = rs.getString("PASSWORD");
 
-        if( count == 0 ){
-            id = 0;
-        }else{
-            id = id;
-        }
-        
-        // close statement dan koneksinya
-        statement.close();
-        disconnect();   
-        } catch (Exception e) {
+                    if (dbEmail.equals(eml) && dbPassword.equals(password)) {
+                        return "Login Success";
+                    }
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        return "Incorrect email or password";
     }
 
-    //login akun
-    public static String authAkun(int id, String eml, String password){
-        String data = "";
-        String email = "";
-        String pass = "";
-        connect();
-        try {
+    // Register akun
+    public static boolean register(String email, String password) {
+        String query = "INSERT INTO akun (EMAIL, PASSWORD) VALUES (?, ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            statement = conn.createStatement();
-            String query = "SELECT * FROM akun WHERE ID = " + id ;
-            resultData = statement.executeQuery(query);
-            while(resultData.next()){
-                email = resultData.getString("EMAIL");
-                pass = resultData.getString("PASSWORD");
-            }
-            if (email.equals(eml) && pass.equals(password)){
-                data = "Login Success";
-            }else{
-                data = "Incorrect email or password";
-            }
-        } catch (Exception e) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; 
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        disconnect();
-        return data;
-    }
-
-    //register akun
-    public static boolean  register(String email, String password){
-        connect();
-        boolean data = false;
-        try {
-            statement = conn.createStatement();
-            String query = "INSERT INTO akun (EMAIL, PASSWORD) VALUES (" + "'" + email + "', " + "'" + password + "'" + ")";
-            
-            if(conn == null){
-                System.out.println("Connection is null");
-            } else if(!statement.execute(query)){
-                data = true;
-            }
-            statement.close();
-            disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
+        return false; 
     }
 }
