@@ -1,5 +1,6 @@
 package com.auth.config;
 
+import com.printDelay;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ public class DB {
         try {
             Class.forName(JDBC_DRIVER); 
         } catch (ClassNotFoundException e) {
-            System.out.println("Driver MySQL tidak ditemukan!");
+            printDelay.print("Driver MySQL tidak ditemukan!");
             e.printStackTrace();
         }
     }
@@ -30,7 +31,7 @@ public class DB {
     public static int cariData(String eml, String pwd) {
         String query = "SELECT ID FROM akun WHERE email = ?";
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+            PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, eml);
 
@@ -49,7 +50,7 @@ public class DB {
     public static String authAkun(int id, String eml, String password) {
         String query = "SELECT EMAIL, PASSWORD FROM akun WHERE ID = ?";
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+            PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, id);
 
@@ -73,7 +74,7 @@ public class DB {
     public static boolean register(String email, String password) {
         String query = "INSERT INTO akun (EMAIL, PASSWORD) VALUES (?, ?)";
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+            PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, email);
             stmt.setString(2, password);

@@ -2,6 +2,7 @@ package com.auth.view;
 
 import com.auth.config.DB;
 import com.main.Game;
+import com.printDelay;
 public class LoginExtendSuperV extends SuperV {
     
     public LoginExtendSuperV (){
@@ -16,16 +17,15 @@ public class LoginExtendSuperV extends SuperV {
         int a = DB.cariData(email, password);
         if (a > 0){
             msg = DB.authAkun(a, email, password);
-            System.out.println(msg);
+            printDelay.print(msg);
         }else{
-            System.out.println("Account is not registered yet");
+            printDelay.print("Account is not registered yet");
         }
         
         if (msg.equals("Login Success")){
             //langsung keprogram
             Game game = new Game();
-            
-            game.start();
+            game.showMenu();
         }
     }
 }

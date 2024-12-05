@@ -1,4 +1,5 @@
 package com.main;
+import com.printDelay;
 import java.util.Scanner;
 
 public class Game{
@@ -14,11 +15,12 @@ public class Game{
 
     public void showMenu() {
         while (true) {
-            System.out.println("\n=== MENU ===");
-            System.out.println("1. Created Character");
-            System.out.println("2. Start Game");
-            System.out.println("3. Exit");
-            System.out.print(">> ");
+            printDelay.print("""
+                \n=== MENU ===
+            1. Created Character
+            2. Start Game
+            3. Exit
+            >> """);
             int choice = scanner.nextInt();
             scanner.nextLine(); 
 
@@ -26,39 +28,40 @@ public class Game{
                 case 1 -> createCharacter();
                 case 2 -> {
                     if (player == null) {
-                        System.out.println("Please create a character first!");
+                        printDelay.print("Please create a character first!");
                     } else {
                         start();
                     }
                 }
                 case 3 -> {
-                    System.out.println("Thank you for playing!");
+                    printDelay.print("Thank you for playing!");
                     return;
                 }
-                default -> System.out.println("Invalid choice. Try again.");
+                default -> printDelay.print("Invalid choice. Try again.");
             }
         }
     }
 
     public void createCharacter() {
-        System.out.println("\n=== CREATED CHARACTER ===");
-        System.out.print("Enter Username: ");
+        printDelay.print("""
+        \n=== CREATED CHARACTER ===
+        Enter Username:  """);
         String username = scanner.nextLine();
         player = new Player(username);
 
         choseWeapon();
         choseArmor();
 
-        System.out.println("\nCharacter successfully created:");
+        printDelay.print("\nCharacter successfully created:");
         player.display();
     }
 
     public void start(){
-        System.out.println("\n==== Welcome to Text-based RPG! ====\n");
-        System.out.println("Player: " + player.getName());
-        System.out.println("\n*** Monster appear! ***");
-        System.out.println("Goblin !!!");
-        System.out.println("Defeat the monster!\n");
+        printDelay.print("\n==== Welcome to Text-based RPG! ====\n");
+        printDelay.print("Player: " + player.getName());
+        printDelay.print("\n*** Monster appear! ***");
+        printDelay.print("\nGoblin !!!");
+        printDelay.print("\nDefeat the monster!\n");
         monster = new Monster("Goblin");
         
         battle();
@@ -69,22 +72,23 @@ public class Game{
             player.displayStatus();
             monster.displayStatus();
 
-            System.out.println("\nWhat do you want to do?");
-            System.out.println("1. Attack");
-            System.out.println("2. Heal");
-            System.out.println("3. Run");
-            System.out.print(">> ");
+            printDelay.print("""
+            \nWhat do you want to do?
+            1. Attack
+            2. Heal
+            3. Run
+            >>  """);
             int choice = scanner.nextInt();
-            System.out.println("");
+            printDelay.print("");
             switch(choice){
                 case 1 -> player.attack(monster);
                 case 2 -> player.heal();
                 case 3 -> {
-                    System.out.println("You run from the monster!");
-                    System.out.println("The monster is chasing you!!\n");
+                    printDelay.print("You run from the monster!\n");
+                    printDelay.print("The monster is chasing you!!\n");
                 }
                 default -> {
-                    System.out.println("Invalid choice!");
+                    printDelay.print("Invalid choice!\n");
                     continue;
                 }
             }
@@ -94,10 +98,10 @@ public class Game{
         }
 
         if(player.isAlive()){
-            System.out.println("\nYou win!\n");
+            printDelay.print("\nYou win!\n");
             player.display();
         }else{
-            System.out.println("\nYou lose!\n");
+            printDelay.print("\nYou lose!\n");
             player.display();
         }
     }
@@ -106,11 +110,12 @@ public class Game{
         Weapon weapon1 = new Weapon("Sword", 20);
         Weapon weapon2 = new Weapon("Spear", 20);
         Weapon weapon3 = new Weapon("Sickle", 20);
-        System.out.println("\nPlease Choose a weapon !");
-        System.out.println("1. Sword");
-        System.out.println("2. Spear");
-        System.out.println("3. Sickle");
-        System.out.print(">> ");
+        printDelay.print("""
+            \nPlease Choose a weapon !
+            1. Sword
+            2. Spear
+            3. Sickle
+            >> """);
         int choiceWeapon = scanner.nextInt();
         switch(choiceWeapon){
             case 1 -> {
@@ -126,7 +131,7 @@ public class Game{
                 player.equipWeapon(weapon);
             }
             default -> {
-                System.out.println("Invalid choice");
+                printDelay.print("Invalid choice");
                 choseWeapon();
             }
         }
@@ -135,10 +140,11 @@ public class Game{
     private void choseArmor(){
         Armor armor1 = new Armor("Steel Armor", 10);
         Armor armor2 = new Armor("Iron Armor", 10);
-        System.out.println("\nPlease chose a Armor!");
-        System.out.println("1. Steel Armor");
-        System.out.println("2. Iron Armor");
-        System.out.print(">> ");
+        printDelay.print("""
+            \nPlease chose a Armor!
+            1. Steel Armor
+            2. Iron Armor
+            >>  """);
         int choiceArmor = scanner.nextInt();
         switch(choiceArmor){
             case 1 -> {
@@ -150,7 +156,7 @@ public class Game{
                 player.equipArmor(armor);
             }
             default -> {
-                System.out.println("Invalid choice");
+                printDelay.print("Invalid choice");
                 choseArmor();
             }
         }

@@ -1,4 +1,7 @@
 package com.main;
+
+import com.printDelay;
+
 class Weapon{
     private String name;
     private int damage;
@@ -25,7 +28,7 @@ class Weapon{
     }
 
     void display(){
-        System.out.println("Weapon: " + getName() + ", Damage: " + getDamage());
+        printDelay.print("Weapon: " + getName() + ", Damage: " + getDamage() + "\n");
     }
 
 }

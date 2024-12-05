@@ -1,4 +1,6 @@
 package com.main;
+import com.printDelay;
+
 class Character{
     private String name;
     private int health;
@@ -39,20 +41,20 @@ class Character{
     }
 
     public void attack(Character opponent){
-        System.out.println(getName() + " attack " + opponent.getName() + " with damage " + getAttackPower());
+        printDelay.print(getName() + " attack " + opponent.getName() + " with damage " + getAttackPower() + "\n");
         opponent.takeDamage(getAttackPower());
     }
 
     public void takeDamage(int damage){
         setHealth(getHealth() - damage);
-        System.out.println(getName() + " suffered damage " + damage + "\n");
+        printDelay.print(getName() + " suffered damage " + damage + "\n");
 
         if(getHealth() <= 0){
-            System.out.println(getName() + " is dead");
+            printDelay.print(getName() + " is dead\n");
         }
     }
 
     public void displayStatus(){
-        System.out.println(getName() + " - Health " + getHealth());
+        printDelay.print(getName() + " - Health " + getHealth() + "\n");
     }
 }

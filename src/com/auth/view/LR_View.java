@@ -1,5 +1,6 @@
 package com.auth.view;
 
+import com.printDelay;
 import java.util.Scanner;
 
 public class LR_View {
@@ -10,7 +11,7 @@ public class LR_View {
         try (Scanner scanner = new Scanner(System.in)) {
             int option;
             do{
-                System.out.print(
+                printDelay.print(
                         """
                                     \n=== Welcome to TextBased-RPG Game ===
                                     1. Login
@@ -22,8 +23,8 @@ public class LR_View {
                 switch (option) {
                     case 1 -> login.viewLogin();
                     case 2 -> register.viewRegister();
-                    case 3 -> System.out.println("Goodbye!");
-                    default -> System.out.println("Invalid option. Please choose again.");
+                    case 3 -> printDelay.print("Goodbye!");
+                    default -> printDelay.print("Invalid option. Please choose again.");
                 }
             } while (option !=3);
         }
