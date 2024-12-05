@@ -1,5 +1,5 @@
 package com.main;
-import com.printDelay;
+import com.PrintDelay;
 
 class Character{
     private String name;
@@ -41,20 +41,20 @@ class Character{
     }
 
     public void attack(Character opponent){
-        printDelay.print(getName() + " attack " + opponent.getName() + " with damage " + getAttackPower() + "\n");
+        PrintDelay.print(getName() + " attack " + opponent.getName() + " with damage " + getAttackPower() + "\n");
         opponent.takeDamage(getAttackPower());
     }
 
     public void takeDamage(int damage){
         setHealth(getHealth() - damage);
-        printDelay.print(getName() + " suffered damage " + damage + "\n");
+        PrintDelay.print(getName() + " suffered damage " + damage + "\n");
 
         if(getHealth() <= 0){
-            printDelay.print(getName() + " is dead\n");
+            PrintDelay.print(getName() + " is dead\n");
         }
     }
 
     public void displayStatus(){
-        printDelay.print(getName() + " - Health " + getHealth() + "\n");
+        PrintDelay.print(getName() + " - Health " + getHealth() + "\n");
     }
 }

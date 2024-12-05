@@ -1,6 +1,6 @@
 package com.main;
 
-import com.printDelay;
+import com.PrintDelay;
 
 class Monster extends Character{
     public Monster(String name){
@@ -9,13 +9,13 @@ class Monster extends Character{
 
     @Override
     public void attack(Character opponent){
-        printDelay.print(getName() + " viciously attacks " + opponent.getName() + "\n");
+        PrintDelay.print(getName() + " viciously attacks " + opponent.getName() + "\n");
         super.attack(opponent);
     }
 
     @Override
     public void takeDamage(int damage){
-        printDelay.print(getName() + " roars in pain!\n");
+        PrintDelay.print(getName() + " roars in pain!\n");
         super.takeDamage(damage);
     }
 }

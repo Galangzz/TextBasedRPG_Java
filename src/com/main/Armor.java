@@ -1,6 +1,6 @@
 package com.main;
 
-import com.printDelay;
+import com.PrintDelay;
 
 class Armor{
     private int defencePower;
@@ -28,6 +28,6 @@ class Armor{
     }
 
     void display(){
-        printDelay.print("Armor: " + getName() + ", Def: " + getDefencePower() + "\n");
+        PrintDelay.print("Armor: " + getName() + ", Def: " + getDefencePower() + "\n");
     }
 }

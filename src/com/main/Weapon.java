@@ -1,6 +1,6 @@
 package com.main;
 
-import com.printDelay;
+import com.PrintDelay;
 
 class Weapon{
     private String name;
@@ -28,7 +28,7 @@ class Weapon{
     }
 
     void display(){
-        printDelay.print("Weapon: " + getName() + ", Damage: " + getDamage() + "\n");
+        PrintDelay.print("Weapon: " + getName() + ", Damage: " + getDamage() + "\n");
     }
 
 }

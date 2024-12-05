@@ -1,13 +1,13 @@
 package com.auth.view;
 
-import com.printDelay;
+import com.PrintDelay;
 import java.util.Scanner;
 
 public class SuperV {
 
     private String email;
     private static String password;
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public SuperV(){
         // this.email = email;
@@ -31,14 +31,14 @@ public class SuperV {
     }
 
     public void view(){
-        printDelay.print(
+        PrintDelay.print(
         """
         \nPlease Enter Your Email!! 
         Email: """);
         setEmail();
 
 
-        printDelay.print(
+        PrintDelay.print(
         """
         \nPlease Enter Your Password!!
         Password: """);

@@ -2,7 +2,7 @@ package com.auth.view;
 
 import com.auth.config.DB;
 import com.main.Game;
-import com.printDelay;
+import com.PrintDelay;
 public class LoginExtendSuperV extends SuperV {
     
     public LoginExtendSuperV (){
@@ -17,9 +17,9 @@ public class LoginExtendSuperV extends SuperV {
         int a = DB.cariData(email, password);
         if (a > 0){
             msg = DB.authAkun(a, email, password);
-            printDelay.print(msg);
+            PrintDelay.print(msg);
         }else{
-            printDelay.print("Account is not registered yet");
+            PrintDelay.print("Account is not registered yet");
         }
         
         if (msg.equals("Login Success")){

@@ -1,5 +1,5 @@
 package com.main;
-import com.printDelay;
+import com.PrintDelay;
 import java.util.Scanner;
 
 public class Game{
@@ -15,7 +15,7 @@ public class Game{
 
     public void showMenu() {
         while (true) {
-            printDelay.print("""
+            PrintDelay.print("""
                 \n=== MENU ===
             1. Created Character
             2. Start Game
@@ -28,22 +28,22 @@ public class Game{
                 case 1 -> createCharacter();
                 case 2 -> {
                     if (player == null) {
-                        printDelay.print("Please create a character first!");
+                        PrintDelay.print("Please create a character first!");
                     } else {
                         start();
                     }
                 }
                 case 3 -> {
-                    printDelay.print("Thank you for playing!");
+                    PrintDelay.print("Thank you for playing!");
                     return;
                 }
-                default -> printDelay.print("Invalid choice. Try again.");
+                default -> PrintDelay.print("Invalid choice. Try again.");
             }
         }
     }
 
     public void createCharacter() {
-        printDelay.print("""
+        PrintDelay.print("""
         \n=== CREATED CHARACTER ===
         Enter Username:  """);
         String username = scanner.nextLine();
@@ -52,16 +52,16 @@ public class Game{
         choseWeapon();
         choseArmor();
 
-        printDelay.print("\nCharacter successfully created:");
+        PrintDelay.print("\nCharacter successfully created:");
         player.display();
     }
 
     public void start(){
-        printDelay.print("\n==== Welcome to Text-based RPG! ====\n");
-        printDelay.print("Player: " + player.getName());
-        printDelay.print("\n*** Monster appear! ***");
-        printDelay.print("\nGoblin !!!");
-        printDelay.print("\nDefeat the monster!\n");
+        PrintDelay.print("\n==== Welcome to Text-based RPG! ====\n");
+        PrintDelay.print("Player: " + player.getName());
+        PrintDelay.print("\n*** Monster appear! ***");
+        PrintDelay.print("\nGoblin !!!");
+        PrintDelay.print("\nDefeat the monster!\n");
         monster = new Monster("Goblin");
         
         battle();
@@ -72,23 +72,23 @@ public class Game{
             player.displayStatus();
             monster.displayStatus();
 
-            printDelay.print("""
+            PrintDelay.print("""
             \nWhat do you want to do?
             1. Attack
             2. Heal
             3. Run
             >>  """);
             int choice = scanner.nextInt();
-            printDelay.print("");
+            PrintDelay.print("");
             switch(choice){
                 case 1 -> player.attack(monster);
                 case 2 -> player.heal();
                 case 3 -> {
-                    printDelay.print("You run from the monster!\n");
-                    printDelay.print("The monster is chasing you!!\n");
+                    PrintDelay.print("You run from the monster!\n");
+                    PrintDelay.print("The monster is chasing you!!\n");
                 }
                 default -> {
-                    printDelay.print("Invalid choice!\n");
+                    PrintDelay.print("Invalid choice!\n");
                     continue;
                 }
             }
@@ -98,10 +98,10 @@ public class Game{
         }
 
         if(player.isAlive()){
-            printDelay.print("\nYou win!\n");
+            PrintDelay.print("\nYou win!\n");
             player.display();
         }else{
-            printDelay.print("\nYou lose!\n");
+            PrintDelay.print("\nYou lose!\n");
             player.display();
         }
     }
@@ -110,7 +110,7 @@ public class Game{
         Weapon weapon1 = new Weapon("Sword", 20);
         Weapon weapon2 = new Weapon("Spear", 20);
         Weapon weapon3 = new Weapon("Sickle", 20);
-        printDelay.print("""
+        PrintDelay.print("""
             \nPlease Choose a weapon !
             1. Sword
             2. Spear
@@ -131,7 +131,7 @@ public class Game{
                 player.equipWeapon(weapon);
             }
             default -> {
-                printDelay.print("Invalid choice");
+                PrintDelay.print("Invalid choice");
                 choseWeapon();
             }
         }
@@ -140,7 +140,7 @@ public class Game{
     private void choseArmor(){
         Armor armor1 = new Armor("Steel Armor", 10);
         Armor armor2 = new Armor("Iron Armor", 10);
-        printDelay.print("""
+        PrintDelay.print("""
             \nPlease chose a Armor!
             1. Steel Armor
             2. Iron Armor
@@ -156,7 +156,7 @@ public class Game{
                 player.equipArmor(armor);
             }
             default -> {
-                printDelay.print("Invalid choice");
+                PrintDelay.print("Invalid choice");
                 choseArmor();
             }
         }

@@ -1,7 +1,7 @@
 package com.auth.view;
 
 import com.auth.config.DB;
-import com.printDelay;
+import com.PrintDelay;
 public class RegisterExtendSuperV extends SuperV {
 
     public  void viewRegister(){
@@ -12,13 +12,13 @@ public class RegisterExtendSuperV extends SuperV {
             DB register = new DB();
             int a = DB.cariData(email, password);
             if(a > 0){
-                printDelay.print("Email already exsist!!\n");
+                PrintDelay.print("Email already exsist!!\n");
                 
             }else{
                 if (register.register(email, password)) {
-                    printDelay.print("Account successfully registered\n");
+                    PrintDelay.print("Account successfully registered\n");
                 } else{
-                    printDelay.print("Failed to register");
+                    PrintDelay.print("Failed to register");
                 }
             }
     }

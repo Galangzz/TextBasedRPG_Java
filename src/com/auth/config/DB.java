@@ -1,6 +1,6 @@
 package com.auth.config;
 
-import com.printDelay;
+import com.PrintDelay;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ public class DB {
         try {
             Class.forName(JDBC_DRIVER); 
         } catch (ClassNotFoundException e) {
-            printDelay.print("Driver MySQL tidak ditemukan!");
+            PrintDelay.print("Driver MySQL tidak ditemukan!");
             e.printStackTrace();
         }
     }

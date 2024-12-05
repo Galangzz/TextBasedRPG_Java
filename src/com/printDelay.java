@@ -1,6 +1,6 @@
 package com;
 
-public class printDelay {
+public class PrintDelay {
     public static void print(String a){
         int delay = 15;
         for (char ch : a.toCharArray()){
@@ -8,7 +8,8 @@ public class printDelay {
             try {
                 Thread.sleep(delay);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // restore interrupted status
+                Thread.currentThread().interrupt();
+                break; // restore interrupted status
             }
         }
         

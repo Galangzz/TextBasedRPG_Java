@@ -1,6 +1,6 @@
 package com.main;
 
-import com.printDelay;
+import com.PrintDelay;
 
 class Player extends Character{
     private int healAmount;
@@ -21,12 +21,12 @@ class Player extends Character{
     }
 
     public void heal(){
-        printDelay.print(getName() + " heal him self. ");
+        PrintDelay.print(getName() + " heal him self. ");
         setHealth(getHealth() + getHealAmount());
         if(getHealth() > 100){
             setHealth(100);
         }
-        printDelay.print("Current Healt: " + getHealth() + "\n");
+        PrintDelay.print("Current Healt: " + getHealth() + "\n");
     }
 
     void equipWeapon(Weapon weapon){
@@ -39,22 +39,22 @@ class Player extends Character{
     }
 
     void display(){
-        printDelay.print("\n+++++++++++++++++++++++++++\n");
-        printDelay.print("Name: " + getName() + "\n");
+        PrintDelay.print("\n+++++++++++++++++++++++++++\n");
+        PrintDelay.print("Name: " + getName() + "\n");
         if(getHealth() <= 0){
-            printDelay.print("(Player dead!!!)\n");
+            PrintDelay.print("(Player dead!!!)\n");
         }else{
-            printDelay.print("HP: " + getHealth() + "\n");
+            PrintDelay.print("HP: " + getHealth() + "\n");
             weapon.display();
             armor.display();
-            printDelay.print("Total attack: " + getAttackPower() + "\n");
+            PrintDelay.print("Total attack: " + getAttackPower() + "\n");
         }
-        printDelay.print("+++++++++++++++++++++++++++");
+        PrintDelay.print("+++++++++++++++++++++++++++");
     }
 
     @Override
     public void attack(Character opponent){
-        printDelay.print(getName() + " performs a powerful strike on " + opponent.getName() + "\n");
+        PrintDelay.print(getName() + " performs a powerful strike on " + opponent.getName() + "\n");
         super.attack(opponent);
     }
 
@@ -65,7 +65,7 @@ class Player extends Character{
             if(reduceDamage < 0){
                 reduceDamage = 0;
             }
-            printDelay.print(getName() + "'s armor reduces the damage " + armor.getDefencePower() + "\n");
+            PrintDelay.print(getName() + "'s armor reduces the damage " + armor.getDefencePower() + "\n");
             super.takeDamage(reduceDamage);
         }else{
             super.takeDamage(damage);
