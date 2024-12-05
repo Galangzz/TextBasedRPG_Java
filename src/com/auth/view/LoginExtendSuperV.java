@@ -25,7 +25,7 @@ public class LoginExtendSuperV extends SuperV {
             //langsung keprogram
             Game game = new Game();
             
-            game.start();
+            game.showMenu();
         }
     }
 }
