@@ -1,4 +1,4 @@
-package com;
+package com.view;
 
 public class PrintDelay {
     public static void print(String a){
@@ -9,7 +9,7 @@ public class PrintDelay {
                 Thread.sleep(delay);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                break; // restore interrupted status
+                break;
             }
         }
         

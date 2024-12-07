@@ -1,6 +1,6 @@
 package com.auth.config;
 
-import com.PrintDelay;
+import com.view.PrintDelay;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

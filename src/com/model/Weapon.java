@@ -1,12 +1,12 @@
-package com.main;
+package com.model;
 
-import com.PrintDelay;
+import com.view.PrintDelay;
 
-class Weapon{
+public class Weapon{
     private String name;
     private int damage;
 
-    Weapon(String name, int damage){
+    public Weapon(String name, int damage){
         this.name = name;
         this.damage = damage;
     }

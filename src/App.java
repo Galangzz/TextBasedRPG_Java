@@ -1,14 +1,11 @@
-
-import com.auth.view.LR_View;
-
-
+import com.view.AuthView;
 
 public class App {
     public static void main(String[] args){
         
         
-        LR_View initialDisplay = new LR_View();
-        initialDisplay.view(); 
+        AuthView initialDisplay = new AuthView();
+        initialDisplay.displayMenu(); 
         // Register.register();
         
         

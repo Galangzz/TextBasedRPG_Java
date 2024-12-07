@@ -1,8 +1,8 @@
-package com.main;
+package com.model;
 
-import com.PrintDelay;
+import com.view.PrintDelay;
 
-class Player extends Character{
+public class Player extends Character{
     private int healAmount;
     Weapon weapon;
     Armor armor;
@@ -29,16 +29,16 @@ class Player extends Character{
         PrintDelay.print("Current Healt: " + getHealth() + "\n");
     }
 
-    void equipWeapon(Weapon weapon){
+    public void equipWeapon(Weapon weapon){
         this.weapon = weapon;
         this.setAttackPower(weapon.getDamage() + 10);
     }
 
-    void equipArmor(Armor armor){
+    public void equipArmor(Armor armor){
         this.armor = armor;
     }
 
-    void display(){
+    public void display(){
         PrintDelay.print("\n+++++++++++++++++++++++++++\n");
         PrintDelay.print("Name: " + getName() + "\n");
         if(getHealth() <= 0){
@@ -50,6 +50,7 @@ class Player extends Character{
             PrintDelay.print("Total attack: " + getAttackPower() + "\n");
         }
         PrintDelay.print("+++++++++++++++++++++++++++");
+        PrintDelay.print("\n");
     }
 
     @Override
