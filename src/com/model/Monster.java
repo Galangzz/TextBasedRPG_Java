@@ -1,8 +1,8 @@
-package com.main;
+package com.model;
 
-import com.PrintDelay;
+import com.view.PrintDelay;
 
-class Monster extends Character{
+public class Monster extends Character{
     public Monster(String name){
         super(name, 90, 20);
     }

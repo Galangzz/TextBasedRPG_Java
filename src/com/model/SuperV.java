@@ -1,6 +1,5 @@
-package com.auth.view;
+package com.model;
 
-import com.PrintDelay;
 import java.util.Scanner;
 
 public class SuperV {
@@ -29,22 +28,5 @@ public class SuperV {
     public String getPassword(){
         return password;
     }
-
-    public void view(){
-        PrintDelay.print(
-        """
-        \nPlease Enter Your Email!! 
-        Email: """);
-        setEmail();
-
-
-        PrintDelay.print(
-        """
-        \nPlease Enter Your Password!!
-        Password: """);
-        setPassword();
-    }
-
-
 
 }

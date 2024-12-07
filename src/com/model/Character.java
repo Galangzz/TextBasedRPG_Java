@@ -1,7 +1,7 @@
-package com.main;
-import com.PrintDelay;
+package com.model;
+import com.view.PrintDelay;
 
-class Character{
+public class Character{
     private String name;
     private int health;
     private int attackPower;

@@ -1,12 +1,12 @@
-package com.main;
+package com.model;
 
-import com.PrintDelay;
+import com.view.PrintDelay;
 
-class Armor{
+public class Armor{
     private int defencePower;
     private String name;
 
-    Armor(String name, int  defencePower){
+    public Armor(String name, int  defencePower){
         this.name = name;
         this.defencePower = defencePower;
     }

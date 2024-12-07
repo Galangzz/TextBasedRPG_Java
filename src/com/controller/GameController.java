@@ -1,29 +1,31 @@
-package com.main;
-import com.PrintDelay;
+package com.controller;
+
+import com.model.Armor;
+import com.model.Monster;
+import com.model.Player;
+import com.model.Weapon;
+import com.view.GameView;
+import com.view.PrintDelay;
 import java.util.Scanner;
 
-public class Game{
+public class GameController{
     private Player player;
     private Monster monster;
     private Armor armor;
     private Weapon weapon;
+    private final GameView view;
     private final Scanner scanner;
 
-    public Game(){
+    public GameController(){
+        view = new GameView();
         scanner = new Scanner(System.in);
     }  
 
     public void showMenu() {
         while (true) {
-            PrintDelay.print("""
-                \n=== MENU ===
-            1. Created Character
-            2. Start Game
-            3. Exit
-            >> """);
+            view.showMenu();
             int choice = scanner.nextInt();
             scanner.nextLine(); 
-
             switch (choice) {
                 case 1 -> createCharacter();
                 case 2 -> {
@@ -35,6 +37,7 @@ public class Game{
                 }
                 case 3 -> {
                     PrintDelay.print("Thank you for playing!");
+                    PrintDelay.print("\n");
                     return;
                 }
                 default -> PrintDelay.print("Invalid choice. Try again.");
@@ -43,27 +46,19 @@ public class Game{
     }
 
     public void createCharacter() {
-        PrintDelay.print("""
-        \n=== CREATED CHARACTER ===
-        Enter Username:  """);
+        view.displayCreation();
         String username = scanner.nextLine();
         player = new Player(username);
 
         choseWeapon();
         choseArmor();
 
-        PrintDelay.print("\nCharacter successfully created:");
-        player.display();
+        view.displayCreationSuccess(player);
     }
 
     public void start(){
-        PrintDelay.print("\n==== Welcome to Text-based RPG! ====\n");
-        PrintDelay.print("Player: " + player.getName());
-        PrintDelay.print("\n*** Monster appear! ***");
-        PrintDelay.print("\nGoblin !!!");
-        PrintDelay.print("\nDefeat the monster!\n");
+        view.displayBattle(player, monster);
         monster = new Monster("Goblin");
-        
         battle();
     }
 
@@ -71,15 +66,8 @@ public class Game{
         while (player.isAlive() && monster.isAlive()){
             player.displayStatus();
             monster.displayStatus();
-
-            PrintDelay.print("""
-            \nWhat do you want to do?
-            1. Attack
-            2. Heal
-            3. Run
-            >>  """);
+            view.showBattleOptions();
             int choice = scanner.nextInt();
-            PrintDelay.print("");
             switch(choice){
                 case 1 -> player.attack(monster);
                 case 2 -> player.heal();
@@ -98,11 +86,9 @@ public class Game{
         }
 
         if(player.isAlive()){
-            PrintDelay.print("\nYou win!\n");
-            player.display();
+            view.showVictory(player);
         }else{
-            PrintDelay.print("\nYou lose!\n");
-            player.display();
+            view.showDefeat(player);
         }
     }
 
@@ -110,12 +96,7 @@ public class Game{
         Weapon weapon1 = new Weapon("Sword", 20);
         Weapon weapon2 = new Weapon("Spear", 20);
         Weapon weapon3 = new Weapon("Sickle", 20);
-        PrintDelay.print("""
-            \nPlease Choose a weapon !
-            1. Sword
-            2. Spear
-            3. Sickle
-            >> """);
+        view.displayWeaponChoices();
         int choiceWeapon = scanner.nextInt();
         switch(choiceWeapon){
             case 1 -> {
@@ -140,11 +121,7 @@ public class Game{
     private void choseArmor(){
         Armor armor1 = new Armor("Steel Armor", 10);
         Armor armor2 = new Armor("Iron Armor", 10);
-        PrintDelay.print("""
-            \nPlease chose a Armor!
-            1. Steel Armor
-            2. Iron Armor
-            >>  """);
+        view.displayArmorChoices();
         int choiceArmor = scanner.nextInt();
         switch(choiceArmor){
             case 1 -> {

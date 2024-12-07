@@ -1,13 +1,12 @@
-package com.auth.view;
+package com.view;
 
-import com.PrintDelay;
+import com.controller.AuthController;
+import com.model.SuperV;
 import java.util.Scanner;
 
-public class LR_View {
-    public static void view(){
+public class AuthView {
+    public void displayMenu(){
 
-        LoginExtendSuperV login = new LoginExtendSuperV();
-        RegisterExtendSuperV register = new RegisterExtendSuperV();
         try (Scanner scanner = new Scanner(System.in)) {
             int option;
             do{
@@ -21,12 +20,27 @@ public class LR_View {
                 
                 option = scanner.nextInt();
                 switch (option) {
-                    case 1 -> login.viewLogin();
-                    case 2 -> register.viewRegister();
+                    case 1 -> new AuthController().Login();
+                    case 2 -> new AuthController().Register();
                     case 3 -> PrintDelay.print("Goodbye!");
                     default -> PrintDelay.print("Invalid option. Please choose again.");
                 }
             } while (option !=3);
         }
+    }
+
+    public void displayLR(SuperV superV){
+        PrintDelay.print(
+        """
+        \nPlease Enter Your Email!! 
+        Email: """);
+        superV.setEmail();
+
+
+        PrintDelay.print(
+        """
+        \nPlease Enter Your Password!!
+        Password: """);
+        superV.setPassword();
     }
 }
