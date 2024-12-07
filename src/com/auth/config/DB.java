@@ -9,9 +9,9 @@ import java.sql.SQLException;
 
 public class DB {
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/gamedb";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/gamerpg";
     private static final String USER = "root";
-    private static final String PASSWORD = "spensa92";
+    private static final String PASSWORD = "";
 
     static {
         try {
