@@ -1,9 +1,9 @@
 package com.controller;
 
-import com.model.Armor;
+import com.model.ArmorEquipment;
 import com.model.Monster;
 import com.model.Player;
-import com.model.Weapon;
+import com.model.WeaponEquipment;
 import com.view.GameView;
 import com.view.PrintDelay;
 import java.util.Scanner;
@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class GameController{
     private Player player;
     private Monster monster;
-    private Armor armor;
-    private Weapon weapon;
+    private ArmorEquipment armor;
+    private WeaponEquipment weapon;
     private final GameView view;
     private final Scanner scanner;
 
@@ -30,7 +30,7 @@ public class GameController{
                 case 1 -> createCharacter();
                 case 2 -> {
                     if (player == null) {
-                        PrintDelay.print("Please create a character first!");
+                        PrintDelay.print("Please create a character first!\n");
                     } else {
                         start();
                     }
@@ -40,7 +40,7 @@ public class GameController{
                     PrintDelay.print("\n");
                     return;
                 }
-                default -> PrintDelay.print("Invalid choice. Try again.");
+                default -> PrintDelay.print("Invalid choice. Try again.\n");
             }
         }
     }
@@ -93,9 +93,9 @@ public class GameController{
     }
 
     private void choseWeapon(){
-        Weapon weapon1 = new Weapon("Sword", 20);
-        Weapon weapon2 = new Weapon("Spear", 20);
-        Weapon weapon3 = new Weapon("Sickle", 20);
+        WeaponEquipment weapon1 = new WeaponEquipment("Sword", 20);
+        WeaponEquipment weapon2 = new WeaponEquipment("Spear", 20);
+        WeaponEquipment weapon3 = new WeaponEquipment("Sickle", 20);
         view.displayWeaponChoices();
         int choiceWeapon = scanner.nextInt();
         switch(choiceWeapon){
@@ -119,8 +119,8 @@ public class GameController{
     }
 
     private void choseArmor(){
-        Armor armor1 = new Armor("Steel Armor", 10);
-        Armor armor2 = new Armor("Iron Armor", 10);
+        ArmorEquipment armor1 = new ArmorEquipment("Steel Armor", 10);
+        ArmorEquipment armor2 = new ArmorEquipment("Iron Armor", 10);
         view.displayArmorChoices();
         int choiceArmor = scanner.nextInt();
         switch(choiceArmor){

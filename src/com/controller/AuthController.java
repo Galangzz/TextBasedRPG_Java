@@ -1,8 +1,8 @@
 package com.controller;
 
-import com.view.AuthView;
-import com.model.SuperV;
 import com.auth.config.DB;
+import com.model.SuperV;
+import com.view.AuthView;
 import com.view.PrintDelay;
 
 public class AuthController {
@@ -15,46 +15,61 @@ public class AuthController {
         authView = new AuthView();
     }
 
-    // Proses login atau registrasi
+    // Proses login
     public void processAuth() {
         authView.displayMenu();
     }
 
     public void Login() {
-        String msg = "";
+        String role;
         authView.displayLR(superV);
-
-        String email = superV.getEmail();
-        String password = superV.getPassword();
-
-        int a = DB.cariData(email, password);
-        if (a > 0){
-            msg = DB.authAkun(a, email, password);
-            PrintDelay.print(msg);
+        if (superV.getEmail().contains(" ")) {
+            PrintDelay.print("Make sure your email typing is correct\n");
         }else{
-            PrintDelay.print("Account is not registered yet");
-        }
-        
-        if (msg.equals("Login Success")){
-            PrintDelay.print("\n");
-
-            //langsung keprogram
-            GameController game = new GameController();
-            game.showMenu();
+            String email = superV.getEmail();
+            String password = superV.getPassword();
+            
+            int a = DB.cariData(email);
+            if (a > 0){
+                role = DB.authAkun(a, email, password);
+            }else{
+                role = "Account is not registered yet";
+                
+            }
+            switch (role) {
+                case "player"-> {
+                    PrintDelay.print("\n--- Welcome ---\n");
+                    new GameController().showMenu();
+                }
+                case "admin" -> {
+                    PrintDelay.print("\n * Hello Admin * \n");
+                    new AdminController().adminDisplay();
+                }
+                default->{
+                    PrintDelay.print(role);
+                    PrintDelay.print("\n");
+                    // throw new AssertionError(msg);
+                }
+            }
         }
     }
+        
 
+    //Proses Register
     public void Register() {
         authView.displayLR(superV);
-
-        String email = superV.getEmail();
-        String password = superV.getPassword();
-
-        if (DB.cariData(email, password) > 0) {
-            PrintDelay.print("Email already exists!\n");
-        } else {
-            boolean registered = DB.register(email, password);
-            PrintDelay.print(registered ? "Account successfully registered\n" : "Failed to register");
+        if (superV.getEmail().contains(" ")) {
+            PrintDelay.print("Make sure your email typing is correct\n");
+        }else{
+            String email = superV.getEmail();
+            String password = superV.getPassword();
+            
+            if (DB.cariData(email) > 0) {
+                PrintDelay.print("Email already exists!\n");
+            } else {
+                boolean registered = DB.register(email, password);
+                PrintDelay.print(registered ? "Account successfully registered\n" : "Failed to register\n");
+            }
         }
     }
 }

@@ -2,33 +2,38 @@ package com.model;
 
 import com.view.PrintDelay;
 
-public class Weapon{
+public class WeaponEquipment implements Equipment{
     private String name;
     private int damage;
 
-    public Weapon(String name, int damage){
+    public WeaponEquipment(String name, int damage){
         this.name = name;
         this.damage = damage;
     }
 
+    @Override
     public String getName(){
         return name;
     }
 
+    @Override
     public void setName(String name){
         this.name = name;
     }
 
-    public int getDamage(){
+    @Override
+    public int getValue(){
         return damage;
     }
 
-    public void setDamage(int damage){
+    @Override
+    public void setValue(int damage){
         this.damage = damage;
     }
 
-    void display(){
-        PrintDelay.print("Weapon: " + getName() + ", Damage: " + getDamage() + "\n");
+    @Override
+    public void showStatistik(){
+        PrintDelay.print("Weapon: " + getName() + ", Damage: " + getValue() + "\n");
     }
 
 }

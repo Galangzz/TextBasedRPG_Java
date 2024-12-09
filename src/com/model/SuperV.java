@@ -14,7 +14,12 @@ public class SuperV {
     }  
 
     public void setEmail(){
-        this.email = scanner.nextLine();
+        //.replace() ini buat ignore space akhir baris tergantung kondisi
+        // this.email = scanner.nextLine().replaceAll("^\\s|\\s+$", "");
+
+        //.trim() ini buat ignore spasi awal dan akhir pada kalimat.
+        this.email = scanner.nextLine().trim();
+
     }
 
     public void setPassword(){

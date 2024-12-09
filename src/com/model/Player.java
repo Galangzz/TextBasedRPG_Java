@@ -4,8 +4,8 @@ import com.view.PrintDelay;
 
 public class Player extends Character{
     private int healAmount;
-    Weapon weapon;
-    Armor armor;
+    WeaponEquipment weapon;
+    ArmorEquipment armor;
     
     public Player(String name){
         super(name, 100, 10);
@@ -29,12 +29,12 @@ public class Player extends Character{
         PrintDelay.print("Current Healt: " + getHealth() + "\n");
     }
 
-    public void equipWeapon(Weapon weapon){
+    public void equipWeapon(WeaponEquipment weapon){
         this.weapon = weapon;
-        this.setAttackPower(weapon.getDamage() + 10);
+        this.setAttackPower(weapon.getValue() + 10);
     }
 
-    public void equipArmor(Armor armor){
+    public void equipArmor(ArmorEquipment armor){
         this.armor = armor;
     }
 
@@ -45,8 +45,8 @@ public class Player extends Character{
             PrintDelay.print("(Player dead!!!)\n");
         }else{
             PrintDelay.print("HP: " + getHealth() + "\n");
-            weapon.display();
-            armor.display();
+            weapon.showStatistik();
+            armor.showStatistik();
             PrintDelay.print("Total attack: " + getAttackPower() + "\n");
         }
         PrintDelay.print("+++++++++++++++++++++++++++");
@@ -62,11 +62,11 @@ public class Player extends Character{
     @Override
     public void takeDamage(int damage){
         if(armor != null){
-            int reduceDamage = damage - armor.getDefencePower();
+            int reduceDamage = damage - armor.getValue();
             if(reduceDamage < 0){
                 reduceDamage = 0;
             }
-            PrintDelay.print(getName() + "'s armor reduces the damage " + armor.getDefencePower() + "\n");
+            PrintDelay.print(getName() + "'s armor reduces the damage " + armor.getValue() + "\n");
             super.takeDamage(reduceDamage);
         }else{
             super.takeDamage(damage);

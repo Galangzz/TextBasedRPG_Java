@@ -16,7 +16,7 @@ public class AuthView {
                                     1. Login
                                     2. Register
                                     3. Exit
-                                    Choose your option[1/2/3]: """);
+                                    Choose your option[1/2/3]: \0""");
                 
                 option = scanner.nextInt();
                 switch (option) {
@@ -33,14 +33,14 @@ public class AuthView {
         PrintDelay.print(
         """
         \nPlease Enter Your Email!! 
-        Email: """);
+        Email: \0""");
         superV.setEmail();
 
 
         PrintDelay.print(
         """
         \nPlease Enter Your Password!!
-        Password: """);
+        Password: \0""");
         superV.setPassword();
     }
 }

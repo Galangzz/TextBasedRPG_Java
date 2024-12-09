@@ -11,13 +11,13 @@ public class GameView {
         1. Created Character
         2. Start Game
         3. Exit
-        >> """);
+        >> \0""");
     }
 
     public void displayCreation() {
         PrintDelay.print("""
         \n=== CREATED CHARACTER ===
-        Enter Username:  """);
+        Enter Username: \0""");
     }
 
     public void displayWeaponChoices() {
@@ -26,7 +26,7 @@ public class GameView {
             1. Sword
             2. Spear
             3. Sickle
-            >> """);
+            >> \0""");
     }
 
     public void displayArmorChoices() {
@@ -34,7 +34,7 @@ public class GameView {
             \nPlease choose an Armor!
             1. Steel Armor
             2. Iron Armor
-            >>  """);
+            >> \0""");
     }
 
     public void displayCreationSuccess(Player player) {
@@ -56,7 +56,7 @@ public class GameView {
             1. Attack
             2. Heal
             3. Run
-            >>  """);
+            >> \0""");
     }
 
     public void showVictory(Player player) {

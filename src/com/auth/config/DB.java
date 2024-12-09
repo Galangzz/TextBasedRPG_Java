@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB {
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -28,8 +30,8 @@ public class DB {
     }
 
     // Mencari akun berdasarkan email
-    public static int cariData(String eml, String pwd) {
-        String query = "SELECT ID FROM akun WHERE email = ?";
+    public static int cariData(String eml) {
+        String query = "SELECT ID_AKUN FROM akun WHERE EMAIL_AKUN = ?";
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -37,7 +39,7 @@ public class DB {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt("ID");
+                    return rs.getInt("ID_AKUN");
                 }
             }
         } catch (SQLException e) {
@@ -48,7 +50,7 @@ public class DB {
 
     // Login akun
     public static String authAkun(int id, String eml, String password) {
-        String query = "SELECT EMAIL, PASSWORD FROM akun WHERE ID = ?";
+        String query = "SELECT EMAIL_AKUN, PASSWORD_AKUN, ROLE_AKUN FROM akun WHERE ID_AKUN = ?";
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -56,12 +58,14 @@ public class DB {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    String dbEmail = rs.getString("EMAIL");
-                    String dbPassword = rs.getString("PASSWORD");
+                    String dbEmail = rs.getString("EMAIL_AKUN");
+                    String dbPassword = rs.getString("PASSWORD_AKUN");
+                    String dbRole = rs.getString("ROLE_AKUN");
 
                     if (dbEmail.equals(eml) && dbPassword.equals(password)) {
-                        return "Login Success";
-                    }
+                        // return player atau admin
+                        return dbRole;
+                    } 
                 }
             }
         } catch (SQLException e) {
@@ -72,7 +76,7 @@ public class DB {
 
     // Register akun
     public static boolean register(String email, String password) {
-        String query = "INSERT INTO akun (EMAIL, PASSWORD) VALUES (?, ?)";
+        String query = "INSERT INTO AKUN (EMAIL_AKUN, PASSWORD_AKUN) VALUES (?, ?)";
         try (Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -86,4 +90,47 @@ public class DB {
         }
         return false; 
     }
+
+    //menghitung banyak data dalam table
+    public static int countData(String table){
+        String query = "SELECT COUNT(*) AS JUMLAH FROM " + table;
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()) {
+
+                if (rs.next()) {
+                    return rs.getInt("JUMLAH");
+                }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //tampilkan semua akun(admin)
+    public static List<String[]> showAllAccount(){
+        String query = "SELECT * FROM akun WHERE ROLE_AKUN = 'player' ORDER BY EMAIL_AKUN";
+        List<String[]> resultList = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+
+                String email = rs.getString("EMAIL_AKUN");
+
+                // Simpan dalam array
+                resultList.add(new String[]{email});
+
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+
+
+
 }
