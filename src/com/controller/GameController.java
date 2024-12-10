@@ -58,7 +58,7 @@ public class GameController{
 
     public void start(){
         view.displayBattle(player, monster);
-        monster = new Monster("Goblin");
+        monster = new Monster("Goblin", 90, 20);
         battle();
     }
 

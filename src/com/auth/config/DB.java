@@ -48,6 +48,22 @@ public class DB {
         return 0; 
     }
 
+    //Mencari character berdasarkan id AKUN
+    public static boolean cariChara(int id) {
+        String query = "SELECT C.NAMA_CHARA AS NAMA, A.EMAIL_AKUN AS EMAIL FROM CHARA C JOIN AKUN A ON C.ID_AKUN = A.ID_AKUN WHERE C.ID_AKUN = ?" ;
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, id); 
+                try (ResultSet rs = stmt.executeQuery()) {
+                    return rs.next();
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; 
+    }
+
+
     // Login akun
     public static String authAkun(int id, String eml, String password) {
         String query = "SELECT EMAIL_AKUN, PASSWORD_AKUN, ROLE_AKUN FROM akun WHERE ID_AKUN = ?";
@@ -108,6 +124,10 @@ public class DB {
         return 0;
     }
 
+
+//EMAIL_ACCOUNT
+
+
     //tampilkan semua akun(admin)
     public static List<String[]> showAllAccount(){
         String query = "SELECT * FROM akun WHERE ROLE_AKUN = 'player' ORDER BY EMAIL_AKUN";
@@ -130,7 +150,105 @@ public class DB {
         return resultList;
     }
 
+    //Delete Akun
+    public static boolean deleteAccount(int id){
+        String query = "DELETE FROM akun WHERE ID_AKUN = " + id;
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; 
+    }
+
+    //delete chara by id akun
+    public static boolean deleteChara(int id){
+        String query = "DELETE FROM chara WHERE ID_AKUN = " + id;
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; 
+    }
+
+//OPPONENT
 
 
+    public static boolean addOpponent(String name, int hp, int damage, int level){
+        String query = "INSERT INTO `monster`(`NAMA_MONSTER`, `HP_MONSTER`, `DAMAGE_MONSTER`, `LEVEL_MONSTER`) VALUES (?, ?, ?, ?)";
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, name);
+            stmt.setInt(2, hp);
+            stmt.setInt(3, damage);
+            stmt.setInt(4, level);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; 
+    }
+
+    //tampilkan semua opponenet(admin)
+    public static List<String[]> showAllOpponent(){
+        String query = "SELECT * FROM monster ORDER BY LEVEL_MONSTER, NAMA_MONSTER;";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection();
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String name = rs.getString("NAMA_MONSTER");
+                int hp = rs.getInt("HP_MONSTER");
+                int damage = rs.getInt("DAMAGE_MONSTER");
+                int level = rs.getInt("LEVEL_MONSTER");
+                // Simpan dalam array
+                resultList.add(new String[]{name, String.valueOf(hp), String.valueOf(damage), String.valueOf(level)});
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //delete opponent
+    public static boolean deleteOpponent(String nama){
+        String query = "DELETE FROM monster WHERE NAMA_MONSTER = ?";
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nama);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; 
+    }
+
+    //cari Opponent
+    public static boolean cariOpponent(String nama){
+        String query = "SELECT * FROM monster WHERE NAMA_MONSTER = ?";
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nama);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; 
+    }
 
 }
