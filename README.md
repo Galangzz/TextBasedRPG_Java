@@ -1,16 +1,29 @@
-## Text Based RPG
-Tugas OOP TID23 kelompok 1
+# Text Based RPG
+**_Tugas OOP TID23 kelompok 1_**
+
+Anggota :
+| Nama                          | NIM           | 
+| :-----------------------------| :------------ | 
+| Galang Krisna Pramudya        | `23051204134` | 
+| Alif Rasyid Febriansyah       | `23051204131` | 
+| Mirza Faris Al Arifin         | `23051204142` | 
+| Alvin Aulia Rahman Sh         | `23051204117` | 
+| Mohammad Eksa Hardian         | `23051204115` | 
+| Neng Jihan                    | `23051204114` | 
+
 
 ## Penjelasan Kode
-
+babababab
 
 ## Cara Menjalankan
 1. Clone repository ini
-2. Nyalakan MySQL dan buat table dan kolom yang diperlukan
-3. Run Java
+```bash
+git clone https://github.com/Galangzz/TextBasedRPG_Java.git
+```
 
-## Buat Table di SQL
+2. Start MySQL dan buat table pada mysql
 
+```sql
 CREATE TABLE akun (
     ID_AKUN INT AUTO_INCREMENT,
     EMAIL_AKUN VARCHAR(255) UNIQUE NOT NULL,
@@ -60,7 +73,19 @@ CREATE TABLE monster(
     PRIMARY KEY (ID_MONSTER)
 );
 
+//tambahkan admin game
+INSERT INTO akun(EMAIL_AKUN, PASSWORD_AKUN, ROLE_AKUN) VALUES ("admingame@gmail.com", "admin123321nimda", "admin")
 
-//perlu kah?
-    MP_CHARACTER INT NOT NULL DEFAULT 100,
-    EXP_CHARACTER INT NOT NULL DEFAULT 0,
+```
+3. Compile java
+```bash
+javac -cp "lib/mysql-connector-j-9.1.0.jar" -d bin -Xlint:deprecation $(find src -name "*.java")
+```
+4. Run Java(Pastika SQL tetap active)
+```bash
+java -cp "bin;lib/mysql-connector-j-9.1.0.jar" App
+```
+
+
+## Sabar ya ini programnya belum selesai
+![SS](https://github.com/user-attachments/assets/b6f110a4-a815-4ae0-b2a8-802254656046)
