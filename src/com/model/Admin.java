@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class Admin {
 
-    private Monster monster;
     private final Scanner scanner;
 
     public Admin() {
