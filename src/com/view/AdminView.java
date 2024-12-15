@@ -92,4 +92,22 @@ public class AdminView {
         PrintDelay.print("Opponent level: " + level + "\n");
         PrintDelay.print("Do you want to add this data? (y/n) : \0");
     }
+
+    public void showAllWeapon(List<String[]> a){
+        int number = 1;
+        PrintDelay.print("\n ~~ Weapon List ~~\n");
+        for(String [] row : a){
+            PrintDelay.print(number+ ". " + row[0] + " damage: " + row[1] + " used_for: " + row[2] + " \n");
+            number++;
+        }
+    }
+
+    public void addWeapon(String name, int damage, String used){
+        PrintDelay.print("-- Weapon Data --\n");
+        PrintDelay.print("Weapon Name: " + name + "\n");
+        PrintDelay.print("Weapon damage: " + damage + "\n");
+        PrintDelay.print("Weapon used: " + used + "\n");
+        PrintDelay.print("Do you want to add this data? (y/n) : \0");
+    }
+
 }

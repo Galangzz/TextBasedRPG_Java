@@ -7,25 +7,25 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Admin {
+
     private Monster monster;
     private final Scanner scanner;
 
-    
-    public Admin(){
+    public Admin() {
         scanner = new Scanner(System.in);
     }
 
-    public void showAllAccount(){
+    public void showAllAccount() {
         // int a = DB.countData("akun");
         List<String[]> data = DB.showAllAccount();
-        if(data.isEmpty()){
+        if (data.isEmpty()) {
             PrintDelay.print("\n~~ No account registered ~~\n");
-        }else{
+        } else {
             new AdminView().showAllAccount(data);
         }
     }
 
-    public void deleteAccount(){
+    public void deleteAccount() {
         new AdminView().deleteAccount();
         String akun = scanner.nextLine().trim();
         int a = DB.cariData(akun);
@@ -33,42 +33,42 @@ public class Admin {
             PrintDelay.print("Are you sure you want to delete the " + akun + " account?\n");
             PrintDelay.print("Enter Option (y/n)>> \0");
             char option = scanner.next().charAt(0);
-            if (option == 'y' || option =='Y') {
-                if(DB.cariChara(a)){
-                    if(DB.deleteChara(a)){
-                        if(DB.deleteAccount(a)){
+            if (option == 'y' || option == 'Y') {
+                if (DB.cariChara(a)) {
+                    if (DB.deleteChara(a)) {
+                        if (DB.deleteAccount(a)) {
                             PrintDelay.print("Account successfully deleted !!!\n");
-                        }else{
+                        } else {
                             PrintDelay.print("Account failed to delete !!!\n");
                         }
-                    }else{
+                    } else {
                         PrintDelay.print("Account failed to delete !!!\n");
                     }
-                }else{
-                    if(DB.deleteAccount(a)){
+                } else {
+                    if (DB.deleteAccount(a)) {
                         PrintDelay.print("Account successfully deleted !!!\n");
-                    }else{
+                    } else {
                         PrintDelay.print("Account failed to delete !!!\n");
                     }
                 }
-            }else {
+            } else {
                 PrintDelay.print("Deleted accounts are cancelled!!!\n");
             }
-        }else{
+        } else {
             PrintDelay.print("Account not found!!\n");
         }
     }
 
-    public void showAllOpponent(){
+    public void showAllOpponent() {
         List<String[]> data = DB.showAllOpponent();
-        if(data.isEmpty()){
+        if (data.isEmpty()) {
             PrintDelay.print("\n~~ Opponent Data Empty ~~\n");
-        }else{
+        } else {
             new AdminView().showAllOpponent(data);
         }
     }
 
-    public void addOpponent(){
+    public void addOpponent() {
         PrintDelay.print("\n~Please fill in the following data ~\n\0");
         PrintDelay.print("Enter opponent name >> ");
         String nama = scanner.nextLine().trim();
@@ -80,32 +80,97 @@ public class Admin {
         int level = scanner.nextInt();
         new AdminView().addOpponent(nama, hp, damage, level);
         int option = scanner.next().charAt(0);
-        if (option == 'y' || option =='Y') {
-            if(DB.addOpponent(nama, hp, damage, level)){
+        if (option == 'y' || option == 'Y') {
+            if (DB.addOpponent(nama, hp, damage, level)) {
                 PrintDelay.print("Opponent successfully added !!!\n");
-            }else{
+            } else {
                 PrintDelay.print("Opponent failed to add !!!\n");
             }
-        }else{
+        } else {
             PrintDelay.print("Opponent data is cancelled!!!\n");
         }
     }
 
-    public void deleteOpponent(){
+    public void deleteOpponent() {
         PrintDelay.print(
-            """
+                """
             Enter the name of the opponent you want to delete
             >> \0""");
         String name = scanner.nextLine().trim();
-        if(DB.cariOpponent(name)){
-            if(DB.deleteOpponent(name)){
+        if (DB.cariOpponent(name)) {
+            if (DB.deleteOpponent(name)) {
                 PrintDelay.print("Opponent successfully deleted !!!\n");
-            }else{
+            } else {
                 PrintDelay.print("Opponent failed to delete !!!\n");
             }
-        }else{
+        } else {
             PrintDelay.print("Opponent not found !!!\n");
         }
     }
-    
+
+
+    public void showAllWeapon() {
+        // int a = DB.countData("akun");
+        List<String[]> data = DB.showAllWeapon();
+        if (data.isEmpty()) {
+            PrintDelay.print("\n~~ Data weapon is empty!! ~~\n");
+        } else {
+            new AdminView().showAllWeapon(data);
+        }
+    }
+
+    public void addWeapon() {
+        PrintDelay.print("\n~Please fill in the following data ~\n\0");
+        PrintDelay.print("Enter weapon name >> ");
+        String nama = scanner.nextLine().trim();
+        PrintDelay.print("Enter weapon damage >> \0");
+        int damage = scanner.nextInt();
+        String used = "fighter";
+        int option_used;
+        do { 
+            PrintDelay.print(
+            """
+            Used For: 
+            1. Fighter
+            2. Mage
+            3. Tank 
+            Choose (1/2/3)>> \0""");
+            option_used = scanner.nextInt();
+            switch (option_used) {
+                case 1-> used = "fighter";
+                case 2-> used = "mage";
+                case 3-> used = "tank";
+                default -> PrintDelay.print("Invalid Choice, Please try again!!");
+            }
+        } while (option_used != 1 && option_used != 2 && option_used !=3);
+
+        new AdminView().addWeapon(nama, damage, used);
+        int option = scanner.next().charAt(0);
+        if (option == 'y' || option == 'Y') {
+            if (DB.addWeapon(nama, damage, used)) {
+                PrintDelay.print("Weapon successfully added !!!\n");
+            } else {
+                PrintDelay.print("Weapon failed to add !!!\n");
+            }
+        } else {
+            PrintDelay.print("Weapon data is cancelled!!!\n");
+        }
+    }
+
+    public void deleteWeapon() {
+        PrintDelay.print(
+                """
+            Enter the name of the weapon you want to delete
+            >> \0""");
+        String name = scanner.nextLine().trim();
+        if (DB.cariWeapon(name)) {
+            if (DB.deleteWeapon(name)) {
+                PrintDelay.print("Weapon successfully deleted !!!\n");
+            } else {
+                PrintDelay.print("Weapon failed to delete !!!\n");
+            }
+        } else {
+            PrintDelay.print("Weapon not found !!!\n");
+        }
+    }
 }
