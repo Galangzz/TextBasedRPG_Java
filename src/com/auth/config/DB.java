@@ -293,4 +293,109 @@ public class DB {
         }
         return false;
     }
+
+//Characterrrrr
+    //tampilkan weapon role
+    public static List<String[]> showAllWeaponRole(String used) {
+        String query = "SELECT * FROM weapon WHERE KEGUNAAN_WEAPON = ? ORDER BY NAMA_WEAPON";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection(); 
+        PreparedStatement stmt = conn.prepareStatement(query);) {
+                stmt.setString(1, used);
+                
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        String name = rs.getString("NAMA_WEAPON");
+                        int id = rs.getInt("ID_WEAPON");
+                        // Simpan dalam array
+                        resultList.add(new String[]{name, String.valueOf(id)});
+                    }
+                }
+                    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //count weapon role
+    public static int countWeaponRole(String table) {
+        String query = "SELECT COUNT(*) AS JUMLAH FROM weapon WHERE KEGUNAAN_WEAPON = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query);) {
+
+            stmt.setString(1, table);
+            try(ResultSet rs = stmt.executeQuery()){
+
+                if (rs.next()) {
+                    return rs.getInt("JUMLAH");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //tampilkan armor role
+    public static List<String[]> showAllArmorRole(String used) {
+        String query = "SELECT * FROM armor WHERE KEGUNAAN_ARMOR = ? ORDER BY NAMA_ARMOR";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection(); 
+        PreparedStatement stmt = conn.prepareStatement(query);) {
+                stmt.setString(1, used);
+                
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        String name = rs.getString("NAMA_ARMOR");
+                        int id = rs.getInt("ID_ARMOR");
+                        // Simpan dalam array
+                        resultList.add(new String[]{name, String.valueOf(id)});
+                    }
+                }
+                    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //count armor role
+    public static int countArmorRole(String table) {
+        String query = "SELECT COUNT(*) AS JUMLAH FROM armor WHERE KEGUNAAN_ARMOR = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query);) {
+
+            stmt.setString(1, table);
+            try(ResultSet rs = stmt.executeQuery()){
+
+                if (rs.next()) {
+                    return rs.getInt("JUMLAH");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //menambahkan karakter
+    public static boolean addCharacter(int idAkun, int idWeapon, int idArmor, String name, String role) {
+        String query = "INSERT INTO chara(ID_AKUN, ID_WEAPON, ID_ARMOR, NAMA_CHARA, ROLE_CHARA) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idAkun);
+            stmt.setInt(2, idWeapon);
+            stmt.setInt(3, idArmor);
+            stmt.setString(4, name);
+            stmt.setString(5, role);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

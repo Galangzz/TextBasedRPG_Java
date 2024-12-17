@@ -4,11 +4,13 @@ import com.view.PrintDelay;
 
 public class Player extends Character{
     private int healAmount;
-    WeaponEquipment weapon;
+    private String role;
+    WeaponEquipment weapon = new WeaponEquipment(role, healAmount);
     ArmorEquipment armor;
     
-    public Player(String name){
+    public Player(String name, String role){
         super(name, 100, 10);
+        this.role = role;
         this.healAmount = 15;
     }
 
@@ -18,6 +20,14 @@ public class Player extends Character{
 
     public int getHealAmount(){
         return healAmount;
+    }
+
+    public String getRole(){
+        return role;
+    }
+
+    public void setRole(String role){
+        this.role = role;
     }
 
     public void heal(){

@@ -2,6 +2,7 @@ package com.view;
 
 import com.model.Monster;
 import com.model.Player;
+import java.util.List;
 
 public class GameView {
 
@@ -20,13 +21,31 @@ public class GameView {
         Enter Username: \0""");
     }
 
-    public void displayWeaponChoices() {
+    public void displayRole(){
         PrintDelay.print("""
-            \nPlease Choose a weapon!
-            1. Sword
-            2. Spear
-            3. Sickle
+            \nPlease Select a Role!
+            1. Fighter
+            2. Mage
+            3. Tank
             >> \0""");
+    }
+
+    public void displayWeaponChoices(List<String[]> data ) {
+        int number = 1;
+        PrintDelay.print("\n ~~ Weapon List ~~\n");
+        for(String [] row : data){
+            PrintDelay.print(number+ ". " + row[0] + " \n");
+            number++;
+        }
+    }
+
+    public void displayArmorChoices(List<String[]> data ) {
+        int number = 1;
+        PrintDelay.print("\n ~~ Armor List ~~\n");
+        for(String [] row : data){
+            PrintDelay.print(number+ ". " + row[0] + " \n");
+            number++;
+        }
     }
 
     public void displayArmorChoices() {

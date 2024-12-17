@@ -1,11 +1,13 @@
 package com.controller;
 
+import com.auth.config.DB;
 import com.model.ArmorEquipment;
 import com.model.Monster;
 import com.model.Player;
 import com.model.WeaponEquipment;
 import com.view.GameView;
 import com.view.PrintDelay;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameController{
@@ -21,13 +23,13 @@ public class GameController{
         scanner = new Scanner(System.in);
     }  
 
-    public void showMenu() {
+    public void showMenu(int a) {
         while (true) {
             view.showMenu();
             int choice = scanner.nextInt();
             scanner.nextLine(); 
             switch (choice) {
-                case 1 -> createCharacter();
+                case 1 -> createCharacter(a);
                 case 2 -> {
                     if (player == null) {
                         PrintDelay.print("Please create a character first!\n");
@@ -45,15 +47,20 @@ public class GameController{
         }
     }
 
-    public void createCharacter() {
+    public void createCharacter(int idAccount) {
         view.displayCreation();
         String username = scanner.nextLine();
-        player = new Player(username);
+        String role = chooseRole();
+        int idWeapon = choseWeapon(role);
+        int idArmor = choseArmor(role);
 
-        choseWeapon();
-        choseArmor();
+        if(DB.addCharacter(idAccount, idWeapon, idArmor, username, role)){
+            PrintDelay.print("Character Successfully Created");
+        }else{
+            PrintDelay.print("Failed to create character");
+        }
 
-        view.displayCreationSuccess(player);
+        // view.displayCreationSuccess(player);
     }
 
     public void start(){
@@ -92,50 +99,76 @@ public class GameController{
         }
     }
 
-    private void choseWeapon(){
-        WeaponEquipment weapon1 = new WeaponEquipment("Sword", 20);
-        WeaponEquipment weapon2 = new WeaponEquipment("Spear", 20);
-        WeaponEquipment weapon3 = new WeaponEquipment("Sickle", 20);
-        view.displayWeaponChoices();
-        int choiceWeapon = scanner.nextInt();
-        switch(choiceWeapon){
-            case 1 -> {
-                weapon = weapon1;
-                player.equipWeapon(weapon);
+    private String chooseRole(){
+        int option_Role;
+        String role = "fighter";
+        do { 
+            
+            view.displayRole();
+            option_Role = scanner.nextInt();
+            switch(option_Role){
+                case 1 -> role = "fighter";
+                case 2 -> role = "mage";
+                case 3 -> role = "tank";
+                default -> PrintDelay.print("Invalid choice !!\n");
             }
-            case 2 -> {
-                weapon = weapon2;
-                player.equipWeapon(weapon);
-            }
-            case 3 -> {
-                weapon = weapon3;
-                player.equipWeapon(weapon);
-            }
-            default -> {
-                PrintDelay.print("Invalid choice");
-                choseWeapon();
-            }
-        }
+        } while (option_Role != 1 && option_Role != 2 && option_Role != 3); 
+        return role;
     }
 
-    private void choseArmor(){
-        ArmorEquipment armor1 = new ArmorEquipment("Steel Armor", 10);
-        ArmorEquipment armor2 = new ArmorEquipment("Iron Armor", 10);
-        view.displayArmorChoices();
-        int choiceArmor = scanner.nextInt();
-        switch(choiceArmor){
-            case 1 -> {
-                armor = armor1;
-                player.equipArmor(armor);
-            }
-            case 2 -> {
-                armor = armor2;
-                player.equipArmor(armor);
-            }
-            default -> {
-                PrintDelay.print("Invalid choice");
-                choseArmor();
-            }
+    private int choseWeapon(String used){
+        List<String[]> data = DB.showAllWeaponRole(used);
+        if(!data.isEmpty()){
+            int jumlah = DB.countWeaponRole(used);
+            int choiceWeapon;
+            do{
+
+                view.displayWeaponChoices(data);
+                PrintDelay.print("Choose >> \0");
+                choiceWeapon = scanner.nextInt();
+                
+                if(choiceWeapon > 0 && choiceWeapon <= jumlah){
+                    String[] weapon = data.get(choiceWeapon - 1);
+                    int idWeapon = Integer.parseInt(weapon[1]);
+                    return idWeapon;
+                }else{
+                    PrintDelay.print("Invalid Choice !!!\n");
+                }
+            }while(choiceWeapon <= 0 || choiceWeapon > jumlah);
+            
+        }else{
+            PrintDelay.print("No weapon available for this role");
         }
+        return 0;
+        
     }
+
+    private int choseArmor(String used){
+        List<String[]> data = DB.showAllArmorRole(used);
+        if(!data.isEmpty()){
+            int jumlah = DB.countArmorRole(used);
+            int choiceArmor;
+            do{
+
+                view.displayArmorChoices(data);
+                PrintDelay.print("Choose >> \0");
+                choiceArmor = scanner.nextInt();
+                
+                if(choiceArmor > 0 && choiceArmor <= jumlah){
+                    String[] armor = data.get(choiceArmor - 1);
+                    int idArmor = Integer.parseInt(armor[1]);
+                    return idArmor;
+                }else{
+                    PrintDelay.print("Invalid Choice !!!\n");
+                }
+            }while(choiceArmor <= 0 || choiceArmor > jumlah);
+            
+        }else{
+            PrintDelay.print("No armor available for this role");
+        }
+        return 0;
+        
+    }
+
+
 }

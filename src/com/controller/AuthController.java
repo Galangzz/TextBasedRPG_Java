@@ -39,7 +39,7 @@ public class AuthController {
             switch (role) {
                 case "player"-> {
                     PrintDelay.print("\n--- Welcome ---\n");
-                    new GameController().showMenu();
+                    new GameController().showMenu(a);
                 }
                 case "admin" -> {
                     PrintDelay.print("\n * Hello Admin * \n");
