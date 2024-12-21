@@ -26,7 +26,7 @@ public class AdminController {
                 case 2 -> admin.deleteAccount();
                 case 3 -> editOpponent();
                 case 4 -> editWeapon();
-                case 5 -> PrintDelay.print("Edit Armor\n");
+                case 5 -> editArmor();
                 case 6 -> {
                     PrintDelay.print("Have a Nice Day!\n");
                     return;
@@ -82,9 +82,9 @@ public class AdminController {
             view.editArmor();
             int option = scanner.nextInt();
             switch (option) {
-                case 1 -> PrintDelay.print("Show All Armor\n");
-                case 2 -> PrintDelay.print("Add Armor\n");
-                case 3 -> PrintDelay.print("Delete Armor\n");
+                case 1 -> admin.showAllArmor();
+                case 2 -> admin.addArmor();
+                case 3 -> admin.deleteArmor();
                 case 4 -> {return;}
                 default -> PrintDelay.print("Invalid option. Please choose again.");
             }

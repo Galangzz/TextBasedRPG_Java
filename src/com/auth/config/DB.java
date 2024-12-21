@@ -398,4 +398,67 @@ public class DB {
         return false;
     }
 
+//ARMOR
+    //menampilkan semua armor
+    public static List<String[]> showAllArmor() {
+        String query = "SELECT * FROM armor ORDER BY KEGUNAAN_armor, DEFENSE_ARMOR";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String name = rs.getString("NAMA_ARMOR");
+                int damage = rs.getInt("DEFENSE_ARMOR");
+                String used = rs.getString("KEGUNAAN_ARMOR");
+                // Simpan dalam array
+                resultList.add(new String[]{name, String.valueOf(damage), used});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //Menambahkan Armor
+    public static boolean addArmor(String name, int defense, String used) {
+        String query = "INSERT INTO armor(NAMA_ARMOR, DEFENSE_ARMOR, KEGUNAAN_ARMOR) VALUES (?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, name);
+            stmt.setInt(2, defense);
+            stmt.setString(3, used);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //Mencari nama armor
+    public static boolean cariArmor(String nama) {
+        String query = "SELECT * FROM armor WHERE NAMA_ARMOR = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nama);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //delete armor
+    public static boolean deleteArmor(String nama) {
+        String query = "DELETE FROM armor WHERE NAMA_ARMOR = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nama);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

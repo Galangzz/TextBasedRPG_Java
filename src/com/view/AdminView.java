@@ -97,16 +97,33 @@ public class AdminView {
         int number = 1;
         PrintDelay.print("\n ~~ Weapon List ~~\n");
         for(String [] row : a){
-            PrintDelay.print(number+ ". " + row[0] + " damage: " + row[1] + " used_for: " + row[2] + " \n");
+            PrintDelay.print(number+ ". " + row[0] + " | Damage: " + row[1] + " | Used_for: " + row[2] + " \n");
             number++;
         }
     }
 
     public void addWeapon(String name, int damage, String used){
-        PrintDelay.print("-- Weapon Data --\n");
+        PrintDelay.print("\n-- Weapon Data --\n");
         PrintDelay.print("Weapon Name: " + name + "\n");
         PrintDelay.print("Weapon damage: " + damage + "\n");
         PrintDelay.print("Weapon used: " + used + "\n");
+        PrintDelay.print("Do you want to add this data? (y/n) : \0");
+    }
+
+    public void showAllArmor(List<String[]> a){
+        int number = 1;
+        PrintDelay.print("\n ~~ Armor List ~~\n");
+        for(String [] row : a){
+            PrintDelay.print(number+ ". " + row[0] + " | Defense: " + row[1] + " | Used_for: " + row[2] + " \n");
+            number++;
+        }
+    }
+
+    public void addArmor(String name, int damage, String used){
+        PrintDelay.print("\n-- Armor Data --\n");
+        PrintDelay.print("Armor Name: " + name + "\n");
+        PrintDelay.print("Armor defense: " + damage + "\n");
+        PrintDelay.print("Armor used: " + used + "\n");
         PrintDelay.print("Do you want to add this data? (y/n) : \0");
     }
 

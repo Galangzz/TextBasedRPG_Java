@@ -172,4 +172,69 @@ public class Admin {
             PrintDelay.print("Weapon not found !!!\n");
         }
     }
+
+    public void showAllArmor(){
+        List<String[]> data = DB.showAllArmor();
+        if (data.isEmpty()) {
+            PrintDelay.print("\n~~ Data Armor is empty!! ~~\n");
+        } else {
+            new AdminView().showAllArmor(data);
+        }
+    }
+
+    public void addArmor() {
+        PrintDelay.print("\n~Please fill in the following data ~\n\0");
+        PrintDelay.print("Enter armor name >> ");
+        String nama = scanner.nextLine().trim();
+        PrintDelay.print("Enter armor defense >> \0");
+        int defense = scanner.nextInt();
+        String used = "fighter";
+        int option_used;
+        do { 
+            PrintDelay.print(
+            """
+            Used For: 
+            1. Fighter
+            2. Mage
+            3. Tank 
+            Choose (1/2/3)>> \0""");
+            option_used = scanner.nextInt();
+            switch (option_used) {
+                case 1-> used = "fighter";
+                case 2-> used = "mage";
+                case 3-> used = "tank";
+                default -> PrintDelay.print("Invalid Choice, Please try again!!");
+            }
+        } while (option_used != 1 && option_used != 2 && option_used !=3);
+
+        new AdminView().addArmor(nama, defense, used);
+        int option = scanner.next().charAt(0);
+        if (option == 'y' || option == 'Y') {
+            if (DB.addArmor(nama, defense, used)) {
+                PrintDelay.print("Armor successfully added !!!\n");
+            } else {
+                PrintDelay.print("Armor failed to add !!!\n");
+            }
+        } else {
+            PrintDelay.print("Armor data is cancelled!!!\n");
+        }
+    }
+
+    public void deleteArmor() {
+        PrintDelay.print(
+                """
+            Enter the name of the armor you want to delete
+            >> \0""");
+        String name = scanner.nextLine().trim();
+        if (DB.cariArmor(name)) {
+            if (DB.deleteArmor(name)) {
+                PrintDelay.print("Armor successfully deleted !!!\n");
+            } else {
+                PrintDelay.print("Armor failed to delete !!!\n");
+            }
+        } else {
+            PrintDelay.print("Armor not found !!!\n");
+        }
+    }
+
 }
