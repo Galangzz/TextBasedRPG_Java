@@ -127,3 +127,5 @@ java -cp "bin;lib/mysql-connector-j-9.1.0.jar" App
 
 ## Sabar ya ini programnya belum selesai
 ![SS](https://github.com/user-attachments/assets/b6f110a4-a815-4ae0-b2a8-802254656046)
+
+## kurang dikit. Sabar Yahh
