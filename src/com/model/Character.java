@@ -5,12 +5,14 @@ public class Character{
     private String name;
     private int health;
     private int attackPower;
+    private int level;
 
 
-    public Character(String name, int health, int attackPower){
+    public Character(String name, int health, int attackPower, int level) {
         this.name = name;
         this.health = health;
         this.attackPower = attackPower;
+        this.level = level;
     }
 
     public String getName(){
@@ -36,6 +38,15 @@ public class Character{
     public void setAttackPower(int attackPower){
         this.attackPower = attackPower;
     }
+
+    public int getLevel(){
+        return level;
+    }   
+
+    public void setLevel(int level){
+        this.level = level;
+    }
+
 
     public boolean isAlive(){
         return health > 0;

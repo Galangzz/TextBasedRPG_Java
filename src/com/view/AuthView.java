@@ -5,9 +5,12 @@ import com.model.SuperV;
 import java.util.Scanner;
 
 public class AuthView {
-    public void displayMenu(){
+    private final Scanner scanner;
 
-        try (Scanner scanner = new Scanner(System.in)) {
+    public AuthView(){
+        scanner = new Scanner(System.in);
+    }
+    public void displayMenu(){
             int option;
             do{
                 PrintDelay.print(
@@ -26,7 +29,7 @@ public class AuthView {
                     default -> PrintDelay.print("Invalid option. Please choose again.");
                 }
             } while (option !=3);
-        }
+        
     }
 
     public void displayLR(SuperV superV){

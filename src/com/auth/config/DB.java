@@ -380,15 +380,18 @@ public class DB {
     }
 
     //menambahkan karakter
-    public static boolean addCharacter(int idAkun, int idWeapon, int idArmor, String name, String role) {
-        String query = "INSERT INTO chara(ID_AKUN, ID_WEAPON, ID_ARMOR, NAMA_CHARA, ROLE_CHARA) VALUES (?, ?, ?, ?, ?)";
+    public static boolean addCharacter(int idAkun, int idWeapon, int idArmor, String name, int damage, int defense, int heal_amount, String role) {
+        String query = "INSERT INTO chara(ID_AKUN, ID_WEAPON, ID_ARMOR, NAMA_CHARA, DAMAGE_CHARA, DEFENSE_CHARA, HEAL_AMOUNT, ROLE_CHARA) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, idAkun);
             stmt.setInt(2, idWeapon);
             stmt.setInt(3, idArmor);
             stmt.setString(4, name);
-            stmt.setString(5, role);
+            stmt.setInt(5, damage);
+            stmt.setInt(6, defense);
+            stmt.setInt(7, heal_amount);
+            stmt.setString(8, role);
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -461,4 +464,152 @@ public class DB {
         return false;
     }
 
+
+    //cari weapon by id return damage weapon untuk dimasukin ke chara
+    public static int cariWeaponByID(int id) {
+        String query = "SELECT DAMAGE_WEAPON FROM weapon WHERE ID_WEAPON = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) {
+                    return rs.getInt("DAMAGE_WEAPON");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //cari armor by id return defense armor untuk dimasukin ke chara
+    public static int cariArmorByID(int id) {
+        String query = "SELECT DEFENSE_ARMOR FROM armor WHERE ID_ARMOR = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) {
+                    return rs.getInt("DEFENSE_ARMOR");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    //tampilkan nama character
+    @Deprecated
+    @SuppressWarnings("Kuno Bro")
+    public static List<String[]> showCharacterNameCreated(int id) {
+        String query = "SELECT NAMA_CHARA as NAMA FROM chara WHERE ID_AKUN = ? ORDER BY NAMA_CHARA";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String name = rs.getString("NAMA");
+
+                    // Simpan dalam array
+                    resultList.add(new String[]{name});
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //tampilkan stats character yang sudah dibuat
+    public static List<String[]> showCharacterStatsCreated(int id) {
+        String query = "SELECT c.NAMA_CHARA as NAMA, w.NAMA_WEAPON as WEAPON, w.DAMAGE_WEAPON, a.NAMA_ARMOR as ARMOR, a.DEFENSE_ARMOR, c.HP_CHARA as HP, c.DAMAGE_CHARA as DAMAGE, c.DEFENSE_CHARA as DEFENSE, c.HEAL_AMOUNT as HEAL, c.ROLE_CHARA as ROLE, c.LEVEL_CHARA as LEVEL, m.ID_MONSTER FROM chara c JOIN weapon w ON c.ID_WEAPON = w.ID_WEAPON JOIN armor a ON c.ID_ARMOR = a.ID_ARMOR LEFT JOIN monster m ON c.ID_MONSTER = m.ID_MONSTER WHERE ID_AKUN = ? ORDER BY c.NAMA_CHARA";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String name = rs.getString("NAMA");
+                    String weapon = rs.getString("WEAPON");
+                    int damage = rs.getInt("DAMAGE_WEAPON");
+                    String armor = rs.getString("ARMOR");
+                    int defense = rs.getInt("DEFENSE_ARMOR");
+                    int hp = rs.getInt("HP");
+                    int damageChara = rs.getInt("DAMAGE");
+                    int defenseChara = rs.getInt("DEFENSE");
+                    int heal = rs.getInt("HEAL");
+                    String role = rs.getString("ROLE");
+                    int level = rs.getInt("LEVEL");
+                    int idMonster = rs.getInt("ID_MONSTER");
+                    // Simpan dalam array
+                    resultList.add(new String[]{name, weapon, String.valueOf(damage), armor, String.valueOf(defense), String.valueOf(hp), String.valueOf(damageChara), String.valueOf(defenseChara), String.valueOf(heal), role, String.valueOf(level), String.valueOf(idMonster)});
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //get data monster(id, nama, hp, damage, level) by level player
+    public static List<String[]> getMonsterData(int level) {
+        String query = "SELECT ID_MONSTER, NAMA_MONSTER, HP_MONSTER, DAMAGE_MONSTER, LEVEL_MONSTER FROM monster WHERE LEVEL_MONSTER = ? ";
+        List<String[]> resultList = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, level);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("ID_MONSTER");
+                    String name = rs.getString("NAMA_MONSTER");
+                    int hp = rs.getInt("HP_MONSTER");
+                    int damage = rs.getInt("DAMAGE_MONSTER");
+                    int levelMonster = rs.getInt("LEVEL_MONSTER");
+                    // Simpan dalam array
+                    resultList.add(new String[]{String.valueOf(id), name, String.valueOf(hp), String.valueOf(damage), String.valueOf(levelMonster)});
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    //get data monster(id, nama, hp, damage, level) by id monster
+    public static String[] getMonsterDataID(int id) {
+        String query = "SELECT ID_MONSTER, NAMA_MONSTER, HP_MONSTER, DAMAGE_MONSTER, LEVEL_MONSTER FROM monster WHERE ID_MONSTER = ? ";
+        String[] resultList = null;
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    id = rs.getInt("ID_MONSTER");
+                    String name = rs.getString("NAMA_MONSTER");
+                    int hp = rs.getInt("HP_MONSTER");
+                    int damage = rs.getInt("DAMAGE_MONSTER");
+                    int levelMonster = rs.getInt("LEVEL_MONSTER");
+                    // Simpan dalam array
+                    resultList = new String[]{String.valueOf(id), name, String.valueOf(hp), String.valueOf(damage), String.valueOf(levelMonster)};
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+
+    public static boolean updateChara(String name, int level, int damage, int defense, int monsterId) {
+        String query = "UPDATE chara SET LEVEL_CHARA = ?, DAMAGE_CHARA = ?, DEFENSE_CHARA = ?, ID_MONSTER = ? WHERE NAMA_CHARA = ?;";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, level);
+            stmt.setInt(2, damage);
+            stmt.setInt(3, defense);
+            stmt.setInt(4, monsterId);
+            stmt.setString(5, name);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -3,15 +3,18 @@ package com.model;
 import com.view.PrintDelay;
 
 public class Player extends Character{
+
     private int healAmount;
     private String role;
-    WeaponEquipment weapon = new WeaponEquipment(role, healAmount);
-    ArmorEquipment armor;
+    private WeaponEquipment weapon;
+    private ArmorEquipment armor;
     
-    public Player(String name, String role){
-        super(name, 100, 10);
+    public Player(String name, String weapon, int damage_weapon, String armor, int defence_armor, int health, int damage, int defence, int heal_amount, String role, int level){
+        super(name, health, damage, level);
+        this.healAmount = heal_amount;
         this.role = role;
-        this.healAmount = 15;
+        this.weapon = new WeaponEquipment(weapon, damage_weapon);
+        this.armor = new ArmorEquipment(armor, defence_armor);
     }
 
     public void setHealAmount(int healAmount){
@@ -48,12 +51,30 @@ public class Player extends Character{
         this.armor = armor;
     }
 
+
+    public void upWeaponDamage(int damage){
+        this.weapon.setValue(damage);
+    }
+
+    public int getWeaponDamage(){
+        return weapon.getValue();
+    }
+
+    public void upArmorDefence(int defence){
+        this.armor.setValue(defence);
+    }
+
+    public int getArmorDefence(){
+        return armor.getValue();
+    }
+
     public void display(){
         PrintDelay.print("\n+++++++++++++++++++++++++++\n");
         PrintDelay.print("Name: " + getName() + "\n");
         if(getHealth() <= 0){
             PrintDelay.print("(Player dead!!!)\n");
         }else{
+            PrintDelay.print("Level: " + getLevel() + "\n");
             PrintDelay.print("HP: " + getHealth() + "\n");
             weapon.showStatistik();
             armor.showStatistik();

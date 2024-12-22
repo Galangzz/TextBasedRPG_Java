@@ -67,7 +67,9 @@ CREATE TABLE chara(
     NAMA_CHARA VARCHAR(255) NOT NULL,
     LEVEL_CHARA INT NOT NULL DEFAULT 1,
     HP_CHARA INT NOT NULL DEFAULT 100,
-    DAMAGE_CHARA INT NOT NULL DEFAULT 20,
+    DAMAGE_CHARA INT NOT NULL DEFAULT 5,
+    DEFENSE_CHARA INT NOT NULL DEFAULT 0,
+    HEAL_AMOUNT INT NOT NULL DEFAULT 0,
     ROLE_CHARA ENUM('fighter', 'mage', 'tank'),
     PRIMARY KEY (ID_CHARA),
     FOREIGN KEY (ID_AKUN) REFERENCES akun(ID_AKUN),
@@ -86,6 +88,31 @@ INSERT INTO armor(NAMA_ARMOR, DEFENSE_ARMOR, KEGUNAAN_ARMOR) VALUES
 ("Astral Robe",15,"mage"),
 ("Obsidian Carapace",35,"tank"),
 ("Fortress Shield",50,"tank");
+
+INSERT INTO weapon(NAMA_WEAPON, DAMAGE_WEAPON, KEGUNAAN_WEAPON) VALUES 
+("Bloodfang Blade", 25, "fighter"),
+("Thunderstrike Axe", 30, "fighter"),
+("Emberstaff", 20, "mage"),
+("Frostshard Wand", 15, "mage"),
+("Ironbreaker Mace", 10, "tank"),
+("Sentinels Halberd", 15, "tank");
+
+INSERT INTO monster(NAMA_MONSTER, HP_MONSTER, DAMAGE_MONSTER, LEVEL_MONSTER) VALUES 
+("Shadow Imp", 80, 30, 1),
+("Forest Wolf", 100, 32, 1),
+("Cave Bat", 60, 20, 1),
+("Slime Blob", 90, 20, 1),
+("Goblin Scout", 110, 22, 1),
+("Stone Golem", 300, 40, 2),
+("Venom Drake", 180, 38, 2),
+("Skeleton Warrior", 150, 42, 2),
+("Fire Salamander", 170, 38, 2),
+("Dark Elf Archer", 180, 43, 2),
+("Abyssal Tyrant", 800, 60, 3),
+("Infernal Warlord", 900, 65, 3),
+("Nightmare Beast", 700, 75, 3),
+("Lich King", 750, 60, 3),
+("Hydra", 1000, 100, 3);
 
 ```
 3. Compile java

@@ -7,7 +7,7 @@
     ],
 
     "editor.fontSize": 14,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": -0.5,
     "workbench.colorTheme": "Beautiful Dracula Normal",
     "workbench.iconTheme": "vscode-icons",  
     "editor.wordWrap": "on"

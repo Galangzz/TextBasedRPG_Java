@@ -79,7 +79,7 @@ public class AdminView {
         int number = 1;
         PrintDelay.print("\n ~~ Opponent ~~\n");
         for(String [] row : a){
-            PrintDelay.print(number+ ". " + row[0] + "\t HP:" + row[1] + "\t Damage: " +  row[2] + "\t Level: " +  row[3] + " \n");
+            PrintDelay.print(number+ ". " + row[0] + " | HP:" + row[1] + " |Damage: " +  row[2] + " | Level: " +  row[3] + " \n");
             number++;
         }
     }
