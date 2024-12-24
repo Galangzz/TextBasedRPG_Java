@@ -74,6 +74,7 @@ public class GameView {
     }
 
     @Deprecated
+    @SuppressWarnings("karatan bro")
     public void displayArmorChoices() {
         PrintDelay.print("""
             \nPlease choose an Armor!

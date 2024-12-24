@@ -1,4 +1,5 @@
 import com.view.AuthView;
+import com.view.PrintDelay;
 
 public class App {
     public static void main(String[] args){
@@ -6,11 +7,6 @@ public class App {
         
         AuthView initialDisplay = new AuthView();
         initialDisplay.displayMenu(); 
-        // Register.register();
-        
-        
-        // Game game = new Game();
-        // game.start();
-        // System.out.println("===== code by: Kelompok 1 TID 23=====");
+        PrintDelay.print("===== code by: Kelompok 1 TID 23=====");
     }
 }
