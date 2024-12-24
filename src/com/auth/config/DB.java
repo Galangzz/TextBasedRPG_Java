@@ -255,9 +255,9 @@ public class DB {
         return executeSingleSelectQuery(query, id, "ID_MONSTER", "NAMA_MONSTER", "HP_MONSTER", "DAMAGE_MONSTER", "LEVEL_MONSTER");
     }
 
-    public static boolean updateChara(String name, int level, int damage, int defense, int monsterId) {
-        String query = "UPDATE chara SET LEVEL_CHARA = ?, DAMAGE_CHARA = ?, DEFENSE_CHARA = ?, ID_MONSTER = ? WHERE NAMA_CHARA = ?";
-        return executeUpdate(query, level, damage, defense, monsterId, name);
+    public static boolean updateChara(String name, int level, int damage, int defense, int monsterId, int health, int heal_amount) {
+        String query = "UPDATE chara SET LEVEL_CHARA = ?, DAMAGE_CHARA = ?, DEFENSE_CHARA = ?, ID_MONSTER = ?, HP_CHARA = ?, HEAL_AMOUNT = ? WHERE NAMA_CHARA = ?";
+        return executeUpdate(query, level, damage, defense, monsterId, health, heal_amount, name);
     }
 
     private static boolean executeUpdate(String query, Object... params) {

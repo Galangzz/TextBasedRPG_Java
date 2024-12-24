@@ -58,13 +58,13 @@ public class GameView {
         PrintDelay.print(">> \0");
     }
 
-    public void displayCharacterStatsCreated(String[] characterStats) {
+    public void displayCharacterStatsCreated(String[] characterStats, int damage_weapon, int defence_armor) {
         PrintDelay.print("\n ~~ Character Stats ~~\n");
         PrintDelay.print("Name: " + characterStats[0] + "\n");
         PrintDelay.print("Weapon: " + characterStats[1] + "\n");
-        PrintDelay.print("Weapon Damage: " + characterStats[2] + "\n");
+        PrintDelay.print("Weapon Damage: " + damage_weapon + "\n");
         PrintDelay.print("Armor: " + characterStats[3] + "\n");
-        PrintDelay.print("Armor Defense: " + characterStats[4] + "\n");
+        PrintDelay.print("Armor Defense: " + defence_armor + "\n");
         PrintDelay.print("HP: " + characterStats[5] + "\n");
         PrintDelay.print("Character Damage: " + characterStats[6] + "\n");
         PrintDelay.print("Character Defense: " + characterStats[7] + "\n");
@@ -113,6 +113,8 @@ public class GameView {
         PrintDelay.print(
             """
             HP Restored
+            HP increased
+            Heal Amount increased
             Weapon damage increased
             Armor defense strengthened
             Player strength increased\n""");

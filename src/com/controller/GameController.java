@@ -104,12 +104,7 @@ public class GameController {
                 if (choice > 0 && choice <= stats.size()) {
                     int i = choice - 1;
                     String[] statsCharacter = stats.get(i);
-                    view.displayCharacterStatsCreated(statsCharacter);
-                    PrintDelay.print("Are you sure you want to choose that character? (Y/N)\n");
-                    PrintDelay.print(">> \0");
-                    String confirm = scanner.nextLine().toUpperCase();
-                    if (confirm.equals("Y")) {
-                        String name = statsCharacter[0];
+                    String name = statsCharacter[0];
                         String weaponPlayer = statsCharacter[1];
                         int damage_weapon = Integer.parseInt(statsCharacter[2]);
                         String armorPlayer = statsCharacter[3];
@@ -137,7 +132,12 @@ public class GameController {
                             default ->
                                 throw new AssertionError();
                         }
-
+                    view.displayCharacterStatsCreated(statsCharacter, damage_weapon, defence_armor);
+                    PrintDelay.print("Are you sure you want to choose that character? (Y/N)\n");
+                    PrintDelay.print(">> \0");
+                    String confirm = scanner.nextLine().toUpperCase();
+                    if (confirm.equals("Y")) {
+                        
                         player = new Player(name, weaponPlayer, damage_weapon, armorPlayer, defence_armor, health, damage, defense, heal_amount, role, level);
 
                         if (statsCharacter[11] != null) {
@@ -253,7 +253,7 @@ public class GameController {
                 start();
             }
             case 2 -> {
-                if (DB.updateChara(player.getName(), player.getLevel(), player.getAttackPower(), player.getArmorDefence(), monster.getId())) {
+                if (DB.updateChara(player.getName(), player.getLevel(), player.getAttackPower(), player.getArmorDefence(), monster.getId(), player.getHealth(), player.getHealAmount())) {
                     PrintDelay.print("\n");
                 }else {
                     PrintDelay.print("Failed to update character\n");
@@ -270,11 +270,18 @@ public class GameController {
         view.restartGameDefeat();
         int choice = scanner.nextInt();
         switch (choice) {
-            //cek cek
-            case 1 ->
+            case 1 ->{
+                player.restoreHealth();
+                monster.restoreHealth();
                 start();
+            }
             case 2 -> {
-
+                player.restoreHealth();
+                if (DB.updateChara(player.getName(), player.getLevel(), player.getAttackPower(), player.getArmorDefence(), monster.getId(), player.getHealth(), player.getHealAmount())) {
+                    PrintDelay.print("Keep the spirit, Don't give up!! !!\n");
+                }else {
+                    PrintDelay.print("Failed to update character\n");
+                }
             }
             default -> {
                 PrintDelay.print("Invalid choice!\n");
@@ -285,23 +292,25 @@ public class GameController {
     }
 
     private void levelUp() {
-        player.setHealth(100);
+        player.restoreHealth();
         if (player.getLevel() < 3) {
-
             player.setLevel(player.getLevel() + 1);
             switch (player.getLevel()) {
                 case 2 -> {
-
+                    player.addHealth(50);
                     player.upWeaponDamage(player.getWeaponDamage() + 10);
                     player.upArmorDefence(player.getArmorDefence() + 10);
                     player.setAttackPower(player.getAttackPower() + 10);
+                    player.setHealAmount(player.getHealAmount() + 10);
                     view.showVictory(player);
                     resumeStage();
                 }
                 case 3 -> {
+                    player.addHealth(50);
                     player.upWeaponDamage(player.getWeaponDamage() + 10);
                     player.upArmorDefence(player.getArmorDefence() + 10);
                     player.setAttackPower(player.getAttackPower() + 10);
+                    player.setHealAmount(player.getHealAmount() + 20);
                     view.showVictory(player);
                     resumeStage();
                 }
@@ -311,7 +320,7 @@ public class GameController {
             
         } else {
             player.display();
-                if (DB.updateChara(player.getName(), player.getLevel(), player.getAttackPower(), player.getArmorDefence(), monster.getId())) {
+                if (DB.updateChara(player.getName(), player.getLevel(), player.getAttackPower(), player.getArmorDefence(), monster.getId(), player.getHealth(), player.getHealAmount())) {
 
                     PrintDelay.print("\nYou have reached level 3!\n");
                     PrintDelay.print("Congratulations!\n");

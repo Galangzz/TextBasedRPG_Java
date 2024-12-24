@@ -36,8 +36,8 @@ public class Player extends Character{
     public void heal(){
         PrintDelay.print(getName() + " heal him self. ");
         setHealth(getHealth() + getHealAmount());
-        if(getHealth() > 100){
-            setHealth(100);
+        if(getHealth() > getMaxHealth()){
+            setHealth(getMaxHealth());
         }
         PrintDelay.print("Current Healt: " + getHealth() + "\n");
     }

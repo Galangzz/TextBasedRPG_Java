@@ -4,6 +4,7 @@ import com.view.PrintDelay;
 public class Character{
     private String name;
     private int health;
+    private int maxHealth;
     private int attackPower;
     private int level;
 
@@ -13,6 +14,7 @@ public class Character{
         this.health = health;
         this.attackPower = attackPower;
         this.level = level;
+        this.maxHealth = health;
     }
 
     public String getName(){
@@ -31,6 +33,14 @@ public class Character{
         this.health = health;
     }
 
+    public void setMaxHealth(int maxHealth){
+        this.maxHealth = maxHealth;
+    }
+
+    public int getMaxHealth(){
+        return maxHealth;
+    }
+
     public int getAttackPower(){
         return attackPower;
     }
@@ -45,6 +55,15 @@ public class Character{
 
     public void setLevel(int level){
         this.level = level;
+    }
+
+    public void restoreHealth(){
+        setHealth(getMaxHealth());
+    }
+
+    public void addHealth(int health){
+        setHealth(getMaxHealth() + health);
+        setMaxHealth(getHealth());
     }
 
 
