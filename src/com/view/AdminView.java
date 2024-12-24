@@ -18,6 +18,7 @@ public class AdminView {
 }
 
     @Deprecated
+    @SuppressWarnings("jaman batu bro")
     public void adminViewAccount(){
         PrintDelay.print(
                 """

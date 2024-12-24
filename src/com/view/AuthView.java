@@ -25,8 +25,8 @@ public class AuthView {
                 switch (option) {
                     case 1 -> new AuthController().Login();
                     case 2 -> new AuthController().Register();
-                    case 3 -> PrintDelay.print("Goodbye!");
-                    default -> PrintDelay.print("Invalid option. Please choose again.");
+                    case 3 -> PrintDelay.print("Goodbye! \n");
+                    default -> PrintDelay.print("Invalid option. Please choose again. \n");
                 }
             } while (option !=3);
         
