@@ -8,13 +8,15 @@ import com.view.PrintDelay;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameController {
 
+    private static final Logger logger = Logger.getLogger(DB.class.getName());
+
     private Player player;
     private Monster monster;
-    // private ArmorEquipment armor;
-    // private WeaponEquipment weapon;
     private final Random random;
     private final GameView view;
     private final Scanner scanner;
@@ -78,7 +80,7 @@ public class GameController {
                     throw new AssertionError();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error created character", idAccount);
 
         }
 
@@ -87,8 +89,6 @@ public class GameController {
         } else {
             PrintDelay.print("Failed to create character");
         }
-
-        // view.displayCreationSuccess(player);
     }
 
     //choose character
@@ -179,8 +179,8 @@ public class GameController {
                 monster = new Monster(idMonster, name, hp, damage, levelMonster);
                 return true;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            logger.log(Level.SEVERE, "Error generate monster By Id", id);
         }
         return false;
     }
@@ -199,8 +199,8 @@ public class GameController {
                 monster = new Monster(id, name, hp, damage, levelMonster);
                 return true;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            logger.log(Level.SEVERE, "Error generate random monster", level);
         }
         return false;
     }
