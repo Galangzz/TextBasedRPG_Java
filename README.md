@@ -125,7 +125,18 @@ java -cp "bin;lib/mysql-connector-j-9.1.0.jar" App
 ```
 
 
-## Finish
-![bgwindah](https://github.com/user-attachments/assets/cd82d581-8953-4747-b9bf-29a14e273a5b)
+## Kontribusi
+
+Kontribusi terhadap proyek ini sangat dihargai! Jika Anda memiliki saran, menemukan bug, atau ingin menambahkan fitur baru, jangan ragu untuk membuat **issue** atau **pull request**. 
+
+## Lisensi
+
+Proyek ini dilisensikan di bawah lisensi [MIT License](LICENSE). Anda bebas menggunakannya sesuai dengan ketentuan lisensi.
+
+
+---
+
+Terima kasih telah mengunjungi proyek ini! 👍🙏
+
 
 
